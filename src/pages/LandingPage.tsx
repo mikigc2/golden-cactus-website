@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import { useMutation } from "convex/react";
-import { api } from "../../convex/_generated/api";
 
 /* ─── Colour tokens (Grafit-inspired) ─── */
 const ACCENT = "#00ff00";
@@ -1247,8 +1245,6 @@ function ContactForm() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const submitContact = useMutation(api.contact.submit);
-
   const handleChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData(prev => ({ ...prev, [field]: e.target.value }));
   };
@@ -1258,14 +1254,20 @@ function ContactForm() {
     if (submitting) return;
     setSubmitting(true);
     try {
-      await submitContact({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        companyName: formData.companyName,
-        websiteUrl: formData.websiteUrl || undefined,
-        monthlyRevenue: formData.monthlyRevenue,
+      // Send form data to the API endpoint
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          companyName: formData.companyName,
+          websiteUrl: formData.websiteUrl || undefined,
+          monthlyRevenue: formData.monthlyRevenue,
+        }),
       });
+      if (!res.ok) throw new Error("API error");
       setSubmitted(true);
     } catch (err) {
       console.error("Form submission failed:", err);
