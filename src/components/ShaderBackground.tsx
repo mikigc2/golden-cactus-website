@@ -211,11 +211,11 @@ void main() {
 }
 `;
 
-/* ── Green-cactus colour palette ── */
+/* ── Green-cactus colour palette (tuned for subtlety) ── */
 const DEFAULT_COLORS = {
-  color1: [0.0, 1.0, 0.0],       // #00FF00 — bright green
+  color1: [0.0, 0.65, 0.08],     // Muted emerald green
   color2: [0.04, 0.04, 0.04],    // #0a0a0a — near black
-  color3: [0.0, 0.4, 0.08],      // #006614 — dark forest green
+  color3: [0.0, 0.32, 0.06],     // Dark forest green
 };
 
 interface Props {
