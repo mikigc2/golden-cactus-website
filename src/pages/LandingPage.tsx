@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { ShaderBackground } from "../components/ShaderBackground";
 
 /* ─── Colour tokens (Grafit-inspired) ─── */
 const ACCENT = "#00ff00";
@@ -235,53 +236,8 @@ function Hero() {
       display: "flex", flexDirection: "column", justifyContent: "center",
       overflow: "hidden", paddingTop: 72,
     }}>
-      {/* Gradient overlay */}
-      <div style={{
-        position: "absolute", inset: 0,
-        background: "radial-gradient(ellipse 80% 60% at 60% 40%, rgba(0,255,0,0.03) 0%, transparent 60%)",
-        pointerEvents: "none",
-      }} />
-
-      {/* Animated grid lines bg */}
-      <div style={{
-        position: "absolute", inset: 0, opacity: 0.04,
-        backgroundImage: `linear-gradient(${BORDER} 1px, transparent 1px), linear-gradient(90deg, ${BORDER} 1px, transparent 1px)`,
-        backgroundSize: "60px 60px",
-        pointerEvents: "none",
-      }} />
-
-      {/* 3D abstract visual */}
-      <div style={{
-        position: "absolute", right: "-5%", top: "10%",
-        width: "55%", height: "80%", pointerEvents: "none",
-        opacity: 0.5,
-      }}>
-        <svg viewBox="0 0 600 600" fill="none" style={{ width: "100%", height: "100%" }}>
-          {/* Abstract crystal/geometric shape */}
-          <defs>
-            <linearGradient id="crystal1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor={ACCENT} stopOpacity="0.15" />
-              <stop offset="50%" stopColor="#ffffff" stopOpacity="0.05" />
-              <stop offset="100%" stopColor={ACCENT} stopOpacity="0.1" />
-            </linearGradient>
-            <linearGradient id="crystal2" x1="100%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.08" />
-              <stop offset="100%" stopColor={ACCENT} stopOpacity="0.05" />
-            </linearGradient>
-          </defs>
-          {/* Large diamond shape */}
-          <polygon points="300,50 500,200 450,450 150,450 100,200" fill="url(#crystal1)" stroke={ACCENT} strokeWidth="0.5" strokeOpacity="0.2" />
-          <polygon points="300,100 450,220 420,400 180,400 150,220" fill="url(#crystal2)" stroke="#ffffff" strokeWidth="0.3" strokeOpacity="0.1" />
-          {/* Internal facets */}
-          <line x1="300" y1="50" x2="300" y2="450" stroke="#ffffff" strokeWidth="0.3" strokeOpacity="0.06" />
-          <line x1="100" y1="200" x2="450" y2="450" stroke="#ffffff" strokeWidth="0.3" strokeOpacity="0.06" />
-          <line x1="500" y1="200" x2="150" y2="450" stroke="#ffffff" strokeWidth="0.3" strokeOpacity="0.06" />
-          {/* Wireframe circles */}
-          <circle cx="300" cy="280" r="120" stroke={ACCENT} strokeWidth="0.5" strokeOpacity="0.1" fill="none" />
-          <circle cx="300" cy="280" r="180" stroke="#ffffff" strokeWidth="0.3" strokeOpacity="0.05" fill="none" />
-          <circle cx="300" cy="280" r="60" stroke={ACCENT} strokeWidth="0.5" strokeOpacity="0.15" fill="none" />
-        </svg>
-      </div>
+      {/* Animated shader background */}
+      <ShaderBackground dimOverlay={0.4} />
 
       <div style={{
         maxWidth: 1320, margin: "0 auto", padding: "80px 32px 60px",
