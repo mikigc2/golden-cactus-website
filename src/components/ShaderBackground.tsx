@@ -16,6 +16,7 @@ void main() {
 }`;
 
 const FRAGMENT_SHADER = `
+#extension GL_OES_standard_derivatives : enable
 precision mediump float;
 
 uniform float iTime;
@@ -258,6 +259,14 @@ export function ShaderBackground({ style, className, colors, dimOverlay = 0.35 }
     if (!gl) {
       setWebglAvailable(false);
       return;     // WebGL not supported — CSS fallback will show
+    }
+
+    /* ── Enable derivatives extension (needed for dFdx/dFdy in WebGL 1) ── */
+    const derivExt = gl.getExtension("OES_standard_derivatives");
+    if (!derivExt) {
+      console.warn("OES_standard_derivatives not available — using CSS fallback");
+      setWebglAvailable(false);
+      return;
     }
 
     /* ── Compile shaders ── */
