@@ -237,7 +237,7 @@ function Hero() {
       overflow: "hidden", paddingTop: 72,
     }}>
       {/* Animated shader background */}
-      <ShaderBackground dimOverlay={0.4} />
+      <ShaderBackground dimOverlay={0.25} />
 
       <div style={{
         maxWidth: 1320, margin: "0 auto", padding: "80px 32px 60px",

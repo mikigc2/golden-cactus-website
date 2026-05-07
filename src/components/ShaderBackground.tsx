@@ -1,9 +1,10 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /* ═══════════════════════════════════════════════════════════════════
    Animated Simplex-Noise Gradient Background (WebGL)
    Adapted from aum.money's Three.js shader — rewritten in raw WebGL
    to avoid adding Three.js as a dependency.
+   Falls back to animated CSS gradient if WebGL is unavailable.
    ═══════════════════════════════════════════════════════════════════ */
 
 const VERTEX_SHADER = `
@@ -224,16 +225,40 @@ interface Props {
   dimOverlay?: number;
 }
 
+/* ── CSS fallback animation for non-WebGL browsers ── */
+const CSS_FALLBACK_STYLE: React.CSSProperties = {
+  position: "absolute",
+  inset: 0,
+  background: `
+    radial-gradient(ellipse 120% 80% at 30% 20%, rgba(0,255,0,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse 100% 60% at 70% 80%, rgba(0,100,20,0.10) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 40% at 50% 50%, rgba(0,200,0,0.06) 0%, transparent 60%),
+    #0a0a0a
+  `,
+  animation: "shaderFallback 12s ease-in-out infinite alternate",
+};
+
+const FALLBACK_KEYFRAMES = `
+@keyframes shaderFallback {
+  0% { filter: hue-rotate(0deg) brightness(1); }
+  50% { filter: hue-rotate(10deg) brightness(1.15); }
+  100% { filter: hue-rotate(-5deg) brightness(0.95); }
+}`;
+
 export function ShaderBackground({ style, className, colors, dimOverlay = 0.35 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animRef = useRef<number>(0);
+  const [webglAvailable, setWebglAvailable] = useState(true);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const gl = canvas.getContext("webgl", { alpha: false, antialias: false, powerPreference: "low-power" });
-    if (!gl) return;     // WebGL not supported — fall back to solid bg
+    if (!gl) {
+      setWebglAvailable(false);
+      return;     // WebGL not supported — CSS fallback will show
+    }
 
     /* ── Compile shaders ── */
     function compile(type: number, src: string) {
@@ -335,9 +360,20 @@ export function ShaderBackground({ style, className, colors, dimOverlay = 0.35 }
         ...style,
       }}
     >
+      {/* CSS fallback for non-WebGL browsers */}
+      {!webglAvailable && (
+        <>
+          <style>{FALLBACK_KEYFRAMES}</style>
+          <div style={CSS_FALLBACK_STYLE} />
+        </>
+      )}
       <canvas
         ref={canvasRef}
-        style={{ width: "100%", height: "100%", display: "block" }}
+        style={{
+          width: "100%",
+          height: "100%",
+          display: webglAvailable ? "block" : "none",
+        }}
       />
       {dimOverlay > 0 && (
         <div
