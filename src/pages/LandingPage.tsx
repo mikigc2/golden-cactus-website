@@ -279,7 +279,7 @@ function WhoWeAre() {
           We help businesses<br />
           <HighlightChip>automate operations 🤖</HighlightChip><br />
           <HighlightChip>save hundreds of hours ⏰</HighlightChip><br />
-          <span style={{ color: TEXT_MUTED, fontSize: "0.7em" }}>and</span>{" "}<HighlightChip>scale efficiently 🚀</HighlightChip><br />
+          <HighlightChip>scale efficiently 🚀</HighlightChip><br />
           without hiring extra teams.
         </h2>
       </div>
