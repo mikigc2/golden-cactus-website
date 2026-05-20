@@ -257,8 +257,8 @@ function HighlightChip({ children }: { children: React.ReactNode }) {
   return (
     <span style={{
       display: "inline-block", background: "#f0f0f0",
-      padding: "6px 18px", borderRadius: 10,
-      whiteSpace: "nowrap", margin: "4px auto",
+      padding: "6px 16px", borderRadius: 10,
+      margin: "4px auto",
     }}>
       {children}
     </span>
@@ -268,17 +268,17 @@ function HighlightChip({ children }: { children: React.ReactNode }) {
 /* ─── Who We Are ─── */
 function WhoWeAre() {
   return (
-    <section style={{ background: BG_LIGHT, padding: "120px 32px" }}>
+    <section style={{ background: BG_LIGHT, padding: "120px 24px" }}>
       <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
         <SectionLabel>WHO WE ARE</SectionLabel>
         <h2 style={{
-          fontSize: "clamp(28px, 3.5vw, 50px)",
-          fontWeight: 400, lineHeight: 1.6, color: TEXT_DARK,
+          fontSize: "clamp(26px, 3.5vw, 50px)",
+          fontWeight: 400, lineHeight: 1.7, color: TEXT_DARK,
         }}>
           We help businesses<br />
-          <HighlightChip>automate operations 🤖</HighlightChip><span style={{ color: TEXT_DARK }}>,</span><br />
-          <HighlightChip>save hundreds of hours ⏰</HighlightChip><span style={{ color: TEXT_DARK }}>, and</span><br />
-          <HighlightChip>scale efficiently 🚀</HighlightChip><br />
+          <HighlightChip>automate operations 🤖</HighlightChip><br />
+          <HighlightChip>save hundreds of hours ⏰</HighlightChip><br />
+          <span style={{ color: TEXT_MUTED, fontSize: "0.7em" }}>and</span> <HighlightChip>scale efficiently 🚀</HighlightChip><br />
           without hiring extra teams.
         </h2>
       </div>
