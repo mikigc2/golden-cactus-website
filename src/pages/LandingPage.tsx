@@ -15,17 +15,14 @@ const BORDER = "#222222";
 function GCLogo({ size = 36 }: { size?: number }) {
   return (
     <svg width={size} height={size * 0.6} viewBox="0 0 100 60" fill="none">
-      {/* G */}
       <path
         d="M25 5C12 5 2 16 2 30s10 25 23 25c10 0 18-6 21-14H30v-8h24v26h-8v-6c-5 6-12 10-21 10C11 63 0 49 0 30S11-3 25-3c11 0 20 6 24 15l-8 4c-3-6-9-11-16-11z"
         fill={TEXT_WHITE}
       />
-      {/* C */}
       <path
         d="M75 5C62 5 52 16 52 30s10 25 23 25c9 0 17-5 21-13l-8-4c-3 5-8 9-13 9-9 0-15-7-15-17s6-17 15-17c5 0 10 4 13 9l8-4C92 10 84 5 75 5z"
         fill={TEXT_WHITE}
       />
-      {/* Accent line connecting */}
       <line x1="44" y1="30" x2="54" y2="30" stroke={ACCENT} strokeWidth="2" />
     </svg>
   );
@@ -49,12 +46,12 @@ function AvailabilityDot() {
         boxShadow: `0 0 6px ${ACCENT}40`,
         animation: "pulse-dot 2s ease-in-out infinite",
       }} />
-      Available for new clients
+      Available for new projects
     </span>
   );
 }
 
-/* ─── CTA Button (Grafit-style pill with arrow) ─── */
+/* ─── CTA Button ─── */
 function CTAButton({ label, href, variant = "outline" }: { label: string; href: string; variant?: "outline" | "filled" }) {
   const [hovered, setHovered] = useState(false);
   const isOutline = variant === "outline";
@@ -64,20 +61,13 @@ function CTAButton({ label, href, variant = "outline" }: { label: string; href: 
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 8,
-        padding: "12px 20px",
-        borderRadius: 100,
+        display: "inline-flex", alignItems: "center", gap: 8,
+        padding: "12px 20px", borderRadius: 100,
         border: isOutline ? `1px solid ${hovered ? TEXT_WHITE : "#444"}` : "none",
         background: isOutline ? "transparent" : (hovered ? "#222" : TEXT_WHITE),
         color: isOutline ? TEXT_WHITE : TEXT_DARK,
-        fontSize: 14,
-        fontWeight: 500,
-        textDecoration: "none",
-        cursor: "pointer",
-        transition: "all 0.25s ease",
-        letterSpacing: "0.01em",
+        fontSize: 14, fontWeight: 500, textDecoration: "none",
+        cursor: "pointer", transition: "all 0.25s ease", letterSpacing: "0.01em",
       }}
     >
       {label}
@@ -97,9 +87,7 @@ function CTAButton({ label, href, variant = "outline" }: { label: string; href: 
 function SectionLabel({ children, light = false }: { children: string; light?: boolean }) {
   return (
     <p style={{
-      fontSize: 12,
-      fontWeight: 500,
-      letterSpacing: "0.15em",
+      fontSize: 12, fontWeight: 500, letterSpacing: "0.15em",
       textTransform: "uppercase",
       color: light ? TEXT_MUTED : "#888",
       marginBottom: 16,
@@ -121,9 +109,9 @@ function Nav() {
   }, []);
 
   const links = [
-    { label: "Services", href: "#services" },
+    { label: "Solutions", href: "#solutions" },
+    { label: "Use Cases", href: "#use-cases" },
     { label: "Technology", href: "#technology" },
-    { label: "Results", href: "#results" },
     { label: "Pricing", href: "#pricing" },
     { label: "Contact", href: "#contact" },
   ];
@@ -141,17 +129,11 @@ function Nav() {
         display: "flex", alignItems: "center", justifyContent: "space-between",
         height: 72,
       }}>
-        {/* Logo */}
         <a href="#" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
           <GCLogo size={38} />
         </a>
 
-        {/* Desktop nav links */}
-        <div style={{
-          display: "flex", alignItems: "center", gap: 36,
-        }}
-          className="nav-desktop"
-        >
+        <div style={{ display: "flex", alignItems: "center", gap: 36 }} className="nav-desktop">
           {links.map(l => (
             <a key={l.href} href={l.href} style={{
               color: TEXT_MUTED, textDecoration: "none", fontSize: 14, fontWeight: 400,
@@ -165,7 +147,6 @@ function Nav() {
           ))}
         </div>
 
-        {/* Right side */}
         <div style={{ display: "flex", alignItems: "center", gap: 24 }} className="nav-right-desktop">
           <AvailabilityDot />
           <a href="#contact" style={{
@@ -181,7 +162,6 @@ function Nav() {
           </a>
         </div>
 
-        {/* Mobile hamburger */}
         <button
           className="nav-mobile-btn"
           onClick={() => setMobileOpen(!mobileOpen)}
@@ -201,27 +181,18 @@ function Nav() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div style={{
-          padding: "16px 32px 24px", borderTop: `1px solid ${BORDER}`,
-          display: "flex", flexDirection: "column", gap: 16,
-        }} className="nav-mobile-menu">
+        <div className="nav-mobile-menu" style={{
+          background: "rgba(10,10,10,0.98)", padding: "20px 32px 32px",
+          borderTop: `1px solid ${BORDER}`,
+        }}>
           {links.map(l => (
             <a key={l.href} href={l.href} onClick={() => setMobileOpen(false)} style={{
-              color: TEXT_WHITE, textDecoration: "none", fontSize: 16, fontWeight: 400,
+              display: "block", padding: "14px 0", color: TEXT_WHITE,
+              textDecoration: "none", fontSize: 16, borderBottom: `1px solid ${BORDER}`,
             }}>
               {l.label}
             </a>
           ))}
-          <div style={{ paddingTop: 8 }}>
-            <AvailabilityDot />
-          </div>
-          <a href="#contact" onClick={() => setMobileOpen(false)} style={{
-            padding: "12px 24px", borderRadius: 100, border: `1px solid ${BORDER}`,
-            color: TEXT_WHITE, textDecoration: "none", fontSize: 14, fontWeight: 500,
-            textAlign: "center",
-          }}>
-            Get started
-          </a>
         </div>
       )}
     </nav>
@@ -236,49 +207,41 @@ function Hero() {
       display: "flex", flexDirection: "column", justifyContent: "center",
       overflow: "hidden", paddingTop: 72,
     }}>
-      {/* Animated shader background */}
       <ShaderBackground dimOverlay={0.3} />
 
       <div style={{
         maxWidth: 1320, margin: "0 auto", padding: "80px 32px 60px",
         position: "relative", zIndex: 1,
       }}>
-        <SectionLabel light>META ADS GROWTH AGENCY</SectionLabel>
+        <SectionLabel light>AI SYSTEMS & AUTOMATION AGENCY</SectionLabel>
 
         <h1 style={{
           fontSize: "clamp(42px, 5.5vw, 80px)",
-          fontWeight: 500,
-          lineHeight: 1.08,
-          color: TEXT_WHITE,
-          maxWidth: 800,
-          marginBottom: 32,
-          letterSpacing: "-0.02em",
+          fontWeight: 500, lineHeight: 1.08,
+          color: TEXT_WHITE, maxWidth: 850,
+          marginBottom: 32, letterSpacing: "-0.02em",
         }}>
-          Performance marketing for ambitious brands
+          We build AI systems that run your business
         </h1>
 
         <p style={{
-          fontSize: 17,
-          lineHeight: 1.6,
-          color: TEXT_MUTED,
-          maxWidth: 480,
-          marginBottom: 40,
+          fontSize: 17, lineHeight: 1.6, color: TEXT_MUTED,
+          maxWidth: 520, marginBottom: 40,
         }}>
-          We scale your business with data-driven Meta Ads campaigns.
-          From strategy to creative to conversion—all under one roof.
+          Custom automation systems, intelligent workflows, and AI-powered tools
+          that save time, cut costs, and scale your operations — without hiring extra teams.
         </p>
 
         <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
           <CTAButton label="Get started" href="#contact" variant="outline" />
-          <a href="#services" style={{
+          <a href="#solutions" style={{
             color: TEXT_MUTED, fontSize: 14, textDecoration: "none",
-            display: "flex", alignItems: "center", gap: 6,
-            transition: "color 0.2s",
+            display: "flex", alignItems: "center", gap: 6, transition: "color 0.2s",
           }}
             onMouseEnter={e => (e.currentTarget.style.color = TEXT_WHITE)}
             onMouseLeave={e => (e.currentTarget.style.color = TEXT_MUTED)}
           >
-            Learn more
+            See what we build
             <svg width={14} height={14} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M8 3v10M4 9l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -289,123 +252,248 @@ function Hero() {
   );
 }
 
-/* ─── Who We Are (white section like Grafit) ─── */
-function WhoWeAre() {
-  return (
-    <section style={{
-      background: BG_LIGHT, padding: "120px 32px",
-    }}>
-      <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
-        <SectionLabel>WHO WE ARE</SectionLabel>
-        <h2 style={{
-          fontSize: "clamp(30px, 3.5vw, 50px)",
-          fontWeight: 400,
-          lineHeight: 1.4,
-          color: TEXT_DARK,
-        }}>
-          We help brands{" "}
-          <HighlightChip>grow revenue 📈</HighlightChip>
-          {","}
-          <br />
-          <HighlightChip>lower CPA 🎯</HighlightChip>
-          {", and "}
-          <HighlightChip>scale profitably 🚀</HighlightChip>
-          <br />
-          without wasting ad spend.
-        </h2>
-      </div>
-    </section>
-  );
-}
-
+/* ─── Highlight Chip ─── */
 function HighlightChip({ children }: { children: React.ReactNode }) {
   return (
     <span style={{
-      display: "inline-block",
-      background: "#f0f0f0",
-      padding: "6px 18px",
-      borderRadius: 10,
-      whiteSpace: "nowrap",
-      margin: "4px 2px",
+      display: "inline-block", background: "#f0f0f0",
+      padding: "6px 18px", borderRadius: 10,
+      whiteSpace: "nowrap", margin: "4px auto",
     }}>
       {children}
     </span>
   );
 }
 
-/* ─── Services Section ─── */
-function Services() {
-  const services = [
+/* ─── Who We Are ─── */
+function WhoWeAre() {
+  return (
+    <section style={{ background: BG_LIGHT, padding: "120px 32px" }}>
+      <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
+        <SectionLabel>WHO WE ARE</SectionLabel>
+        <h2 style={{
+          fontSize: "clamp(28px, 3.5vw, 50px)",
+          fontWeight: 400, lineHeight: 1.6, color: TEXT_DARK,
+        }}>
+          We help businesses<br />
+          <HighlightChip>automate operations 🤖</HighlightChip><span style={{ color: TEXT_DARK }}>,</span><br />
+          <HighlightChip>save hundreds of hours ⏰</HighlightChip><span style={{ color: TEXT_DARK }}>, and</span><br />
+          <HighlightChip>scale efficiently 🚀</HighlightChip><br />
+          without hiring extra teams.
+        </h2>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Use Cases Section (NEW) ─── */
+function UseCases() {
+  const cases = [
+    {
+      icon: "💳",
+      title: "Membership & Subscription Systems",
+      desc: "Automated payment collection, access management, and member lifecycle — from sign-up to renewal reminders.",
+      tags: ["Stripe", "Telegram", "Auto-Access"],
+    },
+    {
+      icon: "🤖",
+      title: "AI Support & Assistant Systems",
+      desc: "Intelligent chatbots and AI assistants that handle customer queries, qualify leads, and escalate when needed.",
+      tags: ["Chatbots", "NLP", "24/7 Support"],
+    },
+    {
+      icon: "👋",
+      title: "Community Onboarding Automations",
+      desc: "Automated welcome flows, KYC, role assignment, and guided onboarding for Telegram, Discord, or Slack communities.",
+      tags: ["Telegram", "Discord", "Welcome Flows"],
+    },
+    {
+      icon: "💰",
+      title: "Payment & Access Workflows",
+      desc: "End-to-end payment processing with automatic access granting, grace periods, and churn recovery — fully hands-off.",
+      tags: ["Payments", "Webhooks", "Auto-Kick"],
+    },
+    {
+      icon: "🎯",
+      title: "Lead Qualification Pipelines",
+      desc: "AI-powered lead scoring, automated follow-ups, and smart routing that turns inbound traffic into qualified prospects.",
+      tags: ["CRM", "Scoring", "Automation"],
+    },
+    {
+      icon: "📡",
+      title: "Automated Content Distribution",
+      desc: "Schedule, generate, and distribute content across multiple channels with AI — social media, email, Telegram, and more.",
+      tags: ["Multi-Channel", "AI Content", "Scheduling"],
+    },
     {
       icon: "📊",
-      title: "Meta Ads Management",
-      desc: "Full-service campaign management on Facebook & Instagram. Strategy, setup, optimization, and scaling.",
-      tags: ["Facebook", "Instagram", "Scaling"],
+      title: "Internal Dashboards & Workflows",
+      desc: "Custom dashboards, approval flows, and operational tools that replace spreadsheets and manual processes.",
+      tags: ["Dashboards", "Reporting", "Ops"],
     },
     {
-      icon: "🎨",
-      title: "Ad Creative & Design",
-      desc: "High-converting ad creatives, videos, and copy that stop the scroll and drive action.",
-      tags: ["Static", "Video", "UGC"],
-    },
-    {
-      icon: "🔬",
-      title: "Strategy & Audits",
-      desc: "Deep account audits, competitor analysis, and custom strategies to unlock growth opportunities.",
-      tags: ["Audits", "Research", "Planning"],
-    },
-    {
-      icon: "🌐",
-      title: "Landing Pages & CRO",
-      desc: "High-converting landing pages and continuous optimization to maximize every click you pay for.",
-      tags: ["Design", "A/B Testing", "Funnels"],
-    },
-    {
-      icon: "📈",
-      title: "Analytics & Reporting",
-      desc: "Crystal-clear reporting and data insights so you always know exactly what's working.",
-      tags: ["Dashboards", "Attribution", "KPIs"],
-    },
-    {
-      icon: "🔁",
-      title: "Retargeting & Scaling",
-      desc: "Advanced retargeting funnels and lookalike audiences to grow your customer base efficiently.",
-      tags: ["Remarketing", "Lookalikes", "Growth"],
+      icon: "🔄",
+      title: "Client Onboarding Systems",
+      desc: "AI-powered onboarding that collects info, sets up accounts, triggers welcome sequences, and tracks progress automatically.",
+      tags: ["Forms", "Automation", "Tracking"],
     },
   ];
 
   return (
-    <section id="services" style={{ background: BG_LIGHT, padding: "0 32px 120px", position: "relative" }}>
+    <section id="use-cases" style={{ background: BG_DARK, padding: "120px 32px" }}>
+      <div style={{ maxWidth: 1320, margin: "0 auto" }}>
+        <div style={{ textAlign: "center", marginBottom: 60 }}>
+          <SectionLabel light>WHAT WE BUILD</SectionLabel>
+          <h2 style={{
+            fontSize: "clamp(28px, 3.5vw, 48px)",
+            fontWeight: 400, lineHeight: 1.2,
+            color: TEXT_WHITE, marginBottom: 16,
+          }}>
+            AI-powered systems for{" "}
+            <span style={{ color: ACCENT }}>every part</span> of your business
+          </h2>
+          <p style={{
+            fontSize: 16, lineHeight: 1.7, color: TEXT_MUTED,
+            maxWidth: 600, margin: "0 auto",
+          }}>
+            From customer-facing automations to internal operations — we build the systems
+            that let you focus on growth while the tech runs itself.
+          </p>
+        </div>
+
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+          gap: 16,
+        }} className="use-cases-grid">
+          {cases.map((c, i) => (
+            <UseCaseCard key={i} {...c} />
+          ))}
+        </div>
+
+        <div style={{
+          textAlign: "center", marginTop: 48,
+          padding: "24px 32px", borderRadius: 16,
+          border: `1px solid ${BORDER}`, background: BG_CARD,
+        }}>
+          <p style={{ fontSize: 15, color: TEXT_MUTED, lineHeight: 1.7, margin: 0 }}>
+            <span style={{ color: ACCENT, fontWeight: 500 }}>Don't see your use case?</span>{" "}
+            These are just examples. We build custom systems tailored to your exact workflow — if it can be automated, we can build it.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function UseCaseCard({ icon, title, desc, tags }: { icon: string; title: string; desc: string; tags: string[] }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        padding: "32px 28px", borderRadius: 16,
+        border: `1px solid ${hovered ? ACCENT + "30" : BORDER}`,
+        background: hovered ? BG_CARD : "transparent",
+        transition: "all 0.3s ease", cursor: "default",
+        position: "relative", overflow: "hidden",
+      }}
+    >
+      {hovered && (
+        <div style={{
+          position: "absolute", top: 0, left: 0, right: 0, height: 2,
+          background: `linear-gradient(90deg, ${ACCENT}, transparent)`,
+        }} />
+      )}
+      <div style={{ fontSize: 28, marginBottom: 16 }}>{icon}</div>
+      <h3 style={{ fontSize: 17, fontWeight: 500, color: TEXT_WHITE, marginBottom: 10 }}>
+        {title}
+      </h3>
+      <p style={{ fontSize: 14, lineHeight: 1.7, color: TEXT_MUTED, marginBottom: 16 }}>
+        {desc}
+      </p>
+      <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+        {tags.map(t => (
+          <span key={t} style={{
+            fontSize: 11, padding: "4px 10px", borderRadius: 100,
+            background: `${ACCENT}10`, color: ACCENT, fontWeight: 500,
+            letterSpacing: "0.02em", border: `1px solid ${ACCENT}20`,
+          }}>
+            {t}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Solutions / Services Section ─── */
+function Solutions() {
+  const services = [
+    {
+      icon: "🤖",
+      title: "AI Systems & Automations",
+      desc: "Custom-built intelligent systems that automate your workflows, manage members, process payments, and handle operations.",
+      tags: ["Workflows", "Integrations", "Bots"],
+    },
+    {
+      icon: "📣",
+      title: "Performance Marketing",
+      desc: "Data-driven Meta Ads and Google Ads campaigns that generate leads, drive sales, and scale your customer acquisition profitably.",
+      tags: ["Meta Ads", "Google Ads", "Lead Gen"],
+    },
+    {
+      icon: "🎨",
+      title: "Ad Creative & Content",
+      desc: "High-converting ad creatives, AI-generated content, and scroll-stopping videos that drive action across every platform.",
+      tags: ["Video", "AI Copy", "UGC"],
+    },
+    {
+      icon: "🌐",
+      title: "Websites & Landing Pages",
+      desc: "High-converting websites, landing pages, and sales funnels optimized for performance and designed to convert visitors into customers.",
+      tags: ["Design", "CRO", "Funnels"],
+    },
+    {
+      icon: "📊",
+      title: "Dashboards & Analytics",
+      desc: "Real-time dashboards, automated reporting, and AI-powered analytics that give you visibility into every metric that matters.",
+      tags: ["Reporting", "KPIs", "Real-Time"],
+    },
+    {
+      icon: "🔗",
+      title: "Integrations & APIs",
+      desc: "Connect your tools, platforms, and data sources into one seamless system. Stripe, Telegram, CRMs, email — we wire it all together.",
+      tags: ["Stripe", "APIs", "CRM"],
+    },
+  ];
+
+  return (
+    <section id="solutions" style={{ background: BG_LIGHT, padding: "120px 32px", position: "relative" }}>
       <div style={{ maxWidth: 1320, margin: "0 auto" }}>
         <div style={{
           display: "flex", justifyContent: "space-between", alignItems: "flex-start",
           marginBottom: 60, flexWrap: "wrap", gap: 24,
         }}>
           <div>
-            <SectionLabel>SERVICES</SectionLabel>
+            <SectionLabel>OUR SOLUTIONS</SectionLabel>
             <h2 style={{
               fontSize: "clamp(28px, 3.5vw, 48px)",
-              fontWeight: 400,
-              lineHeight: 1.2,
-              color: TEXT_DARK,
-              maxWidth: 500,
+              fontWeight: 400, lineHeight: 1.2,
+              color: TEXT_DARK, maxWidth: 520,
             }}>
-              Everything you need to grow with Meta Ads
+              Everything you need to automate and grow
             </h2>
           </div>
           <p style={{
-            fontSize: 15,
-            lineHeight: 1.7,
-            color: "#666",
-            maxWidth: 380,
-            paddingTop: 32,
+            fontSize: 15, lineHeight: 1.7, color: "#666",
+            maxWidth: 380, paddingTop: 32,
           }}>
-            Why juggle multiple freelancers when you can have one dedicated growth team?
-            We combine strategy, creative, and data to fuel your growth.
+            From AI-powered automation to performance marketing — we combine cutting-edge technology with proven strategies to deliver results.
           </p>
         </div>
 
-        {/* Services grid with + decorators */}
         <div style={{ position: "relative" }}>
           <div style={{
             display: "grid",
@@ -434,25 +522,16 @@ function ServiceCard({ icon, title, desc, tags }: { icon: string; title: string;
         borderBottom: `1px solid #e5e5e5`,
         transition: "background 0.3s",
         background: hovered ? "#f8f8f8" : "transparent",
-        cursor: "default",
-        position: "relative",
+        cursor: "default", position: "relative",
       }}
     >
-      {/* + decorators at corners */}
       <span style={{ position: "absolute", top: -8, left: -8, color: "#ccc", fontSize: 14, fontWeight: 300 }}>+</span>
       <span style={{ position: "absolute", top: -8, right: -8, color: "#ccc", fontSize: 14, fontWeight: 300 }}>+</span>
-
       <div style={{ fontSize: 28, marginBottom: 16 }}>{icon}</div>
-      <h3 style={{
-        fontSize: 18, fontWeight: 500, color: TEXT_DARK,
-        marginBottom: 12,
-      }}>
+      <h3 style={{ fontSize: 18, fontWeight: 500, color: TEXT_DARK, marginBottom: 12 }}>
         {title}
       </h3>
-      <p style={{
-        fontSize: 14, lineHeight: 1.6, color: "#666",
-        marginBottom: 16,
-      }}>
+      <p style={{ fontSize: 14, lineHeight: 1.6, color: "#666", marginBottom: 16 }}>
         {desc}
       </p>
       <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
@@ -470,72 +549,58 @@ function ServiceCard({ icon, title, desc, tags }: { icon: string; title: string;
   );
 }
 
-/* ─── Results / Stats Section (dark, like Grafit's "Why Us") ─── */
+/* ─── Results / Stats Section ─── */
 function Results() {
   const stats = [
-    { value: "3.5×", label: "Average ROAS", sub: "across client accounts" },
-    { value: "−42%", label: "Lower CPA", sub: "vs. previous agencies" },
-    { value: "€2M+", label: "Ad Spend Managed", sub: "total budget optimized" },
+    { value: "50+", label: "Systems Built", sub: "automations deployed and running" },
+    { value: "10k+", label: "Hours Saved", sub: "for our clients, per year" },
+    { value: "3.5×", label: "Average ROAS", sub: "across ad accounts managed" },
     { value: "93%", label: "Client Retention", sub: "month-over-month" },
   ];
 
   return (
-    <section id="results" style={{
-      background: BG_DARK, padding: "120px 32px", position: "relative",
-    }}>
+    <section id="results" style={{ background: BG_LIGHT, padding: "120px 32px", position: "relative" }}>
       <div style={{ maxWidth: 1320, margin: "0 auto" }}>
-        <SectionLabel light>PROVEN RESULTS</SectionLabel>
+        <SectionLabel>PROVEN RESULTS</SectionLabel>
         <h2 style={{
           fontSize: "clamp(28px, 3.5vw, 48px)",
-          fontWeight: 400,
-          lineHeight: 1.2,
-          color: TEXT_WHITE,
-          marginBottom: 60,
+          fontWeight: 400, lineHeight: 1.2,
+          color: TEXT_DARK, marginBottom: 60,
         }}>
-          Delivering growth with a proven track record
+          Real impact, measurable results
         </h2>
 
         <div style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-          gap: 16,
+          gap: 0,
         }}>
           {stats.map((s, i) => (
             <div key={i} style={{
-              background: BG_CARD,
-              borderRadius: 16,
-              padding: "40px 32px",
-              border: `1px solid ${BORDER}`,
+              padding: "48px 32px",
+              borderLeft: i > 0 ? `1px solid #e5e5e5` : "none",
               position: "relative",
-              overflow: "hidden",
             }}>
-              {/* Subtle accent glow on first card */}
               {i === 0 && (
                 <div style={{
-                  position: "absolute", top: 0, left: 0, right: 0, height: 2,
-                  background: `linear-gradient(90deg, ${ACCENT}, transparent)`,
+                  position: "absolute", top: 0, left: 0, width: 48, height: 3,
+                  background: ACCENT,
                 }} />
               )}
               <div style={{
                 fontSize: "clamp(36px, 4vw, 56px)",
-                fontWeight: 500,
-                color: TEXT_WHITE,
-                marginBottom: 8,
-                letterSpacing: "-0.02em",
+                fontWeight: 500, color: TEXT_DARK,
+                marginBottom: 8, letterSpacing: "-0.02em",
               }}>
                 {s.value}
               </div>
               <div style={{
-                fontSize: 13,
-                fontWeight: 500,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                color: TEXT_MUTED,
-                marginBottom: 4,
+                fontSize: 13, fontWeight: 500, letterSpacing: "0.08em",
+                textTransform: "uppercase", color: "#999", marginBottom: 4,
               }}>
                 {s.label}
               </div>
-              <div style={{ fontSize: 13, color: "#555" }}>{s.sub}</div>
+              <div style={{ fontSize: 13, color: "#888" }}>{s.sub}</div>
             </div>
           ))}
         </div>
@@ -549,34 +614,31 @@ function Process() {
   const steps = [
     {
       num: "01",
-      title: "Discovery & Audit",
-      desc: "We analyze your current setup, competitors, and market to build a tailored growth roadmap.",
+      title: "Consult & Scope",
+      desc: "We map out your current workflows, identify automation opportunities, and define exactly what to build — whether it's an AI system, a marketing engine, or both.",
     },
     {
       num: "02",
-      title: "Strategy & Launch",
-      desc: "We craft your campaign structure, creatives, and audiences — then launch and start testing.",
+      title: "Design & Build",
+      desc: "Our team builds your custom system using proven frameworks. You get a fully functional prototype within days, not months.",
     },
     {
       num: "03",
-      title: "Optimize & Scale",
-      desc: "Continuous optimization based on real data. We cut what doesn't work and scale what does.",
+      title: "Deploy & Optimise",
+      desc: "We deploy your system, connect all integrations, and continuously optimise based on real data. Your automation gets smarter over time.",
     },
   ];
 
   return (
-    <section id="process" style={{ background: BG_LIGHT, padding: "120px 32px" }}>
+    <section id="process" style={{ background: BG_DARK, padding: "120px 32px" }}>
       <div style={{ maxWidth: 1320, margin: "0 auto" }}>
-        <SectionLabel>HOW IT WORKS</SectionLabel>
+        <SectionLabel light>HOW IT WORKS</SectionLabel>
         <h2 style={{
           fontSize: "clamp(28px, 3.5vw, 48px)",
-          fontWeight: 400,
-          lineHeight: 1.2,
-          color: TEXT_DARK,
-          marginBottom: 60,
-          maxWidth: 600,
+          fontWeight: 400, lineHeight: 1.2,
+          color: TEXT_WHITE, marginBottom: 60, maxWidth: 600,
         }}>
-          From strategy to scale in three steps
+          From idea to running system in days
         </h2>
 
         <div style={{
@@ -587,24 +649,19 @@ function Process() {
           {steps.map((s, i) => (
             <div key={i} style={{
               padding: "40px 32px",
-              borderLeft: i > 0 ? `1px solid #e5e5e5` : "none",
+              borderLeft: i > 0 ? `1px solid ${BORDER}` : "none",
               position: "relative",
             }}>
               <div style={{
-                fontSize: 48, fontWeight: 300, color: "#e5e5e5",
+                fontSize: 48, fontWeight: 300, color: "#333",
                 marginBottom: 20, letterSpacing: "-0.02em",
               }}>
                 {s.num}
               </div>
-              <h3 style={{
-                fontSize: 20, fontWeight: 500, color: TEXT_DARK,
-                marginBottom: 12,
-              }}>
+              <h3 style={{ fontSize: 20, fontWeight: 500, color: TEXT_WHITE, marginBottom: 12 }}>
                 {s.title}
               </h3>
-              <p style={{
-                fontSize: 14, lineHeight: 1.7, color: "#666",
-              }}>
+              <p style={{ fontSize: 14, lineHeight: 1.7, color: TEXT_MUTED }}>
                 {s.desc}
               </p>
             </div>
@@ -619,9 +676,9 @@ function Process() {
 function TechStack() {
   const tools = [
     {
-      name: "Claude Opus 4.6",
-      role: "AI Strategy Engine",
-      desc: "We leverage Anthropic's most advanced reasoning model to analyse campaign data, generate creative strategies, and identify scaling opportunities that humans would miss.",
+      name: "Claude & GPT-4o",
+      role: "AI Intelligence Layer",
+      desc: "We leverage the most advanced AI models to power your systems — from intelligent chatbots and content generation to data analysis and decision-making workflows.",
       logo: (
         <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
           <rect width="40" height="40" rx="10" fill="#D97757" />
@@ -632,22 +689,25 @@ function TechStack() {
       accent: "#D97757",
     },
     {
-      name: "GPT-4o",
-      role: "Content & Copy",
-      desc: "OpenAI's multimodal model powers our ad copy generation, A/B test analysis, and creative variation engine — producing scroll-stopping headlines at scale.",
+      name: "Custom Integrations",
+      role: "Connect Everything",
+      desc: "Stripe, Telegram, Discord, Slack, CRMs, email providers, databases — we wire your entire tech stack into one seamless automated system.",
       logo: (
         <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
           <rect width="40" height="40" rx="10" fill="#10A37F" />
-          <circle cx="20" cy="20" r="8" stroke="white" strokeWidth="1.5" fill="none" />
-          <path d="M20 12v-2M20 30v-2M28 20h2M10 20h2M25.6 14.4l1.4-1.4M13 27l1.4-1.4M25.6 25.6l1.4 1.4M13 13l1.4 1.4" stroke="white" strokeWidth="1.2" strokeLinecap="round" />
+          <path d="M12 20h16M20 12v16" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
+          <circle cx="12" cy="20" r="3" stroke="white" strokeWidth="1.5" fill="none" />
+          <circle cx="28" cy="20" r="3" stroke="white" strokeWidth="1.5" fill="none" />
+          <circle cx="20" cy="12" r="3" stroke="white" strokeWidth="1.5" fill="none" />
+          <circle cx="20" cy="28" r="3" stroke="white" strokeWidth="1.5" fill="none" />
         </svg>
       ),
       accent: "#10A37F",
     },
     {
-      name: "Meta Advantage+",
-      role: "Campaign Automation",
-      desc: "We combine Meta's own AI-driven campaign tools with our proprietary optimization workflows to maximize your ROAS while reducing manual management overhead.",
+      name: "Meta & Google Ads",
+      role: "Performance Marketing",
+      desc: "AI-enhanced campaign management across Meta and Google — automated bidding, creative testing, audience optimization, and real-time budget allocation.",
       logo: (
         <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
           <rect width="40" height="40" rx="10" fill="#0081FB" />
@@ -658,9 +718,9 @@ function TechStack() {
       accent: "#0081FB",
     },
     {
-      name: "Custom AI Agents",
-      role: "Workflow Automation",
-      desc: "Our proprietary AI agents handle repetitive tasks — from automated reporting and budget alerts to creative performance scoring — so we focus on strategy, not spreadsheets.",
+      name: "Workflow Automation",
+      role: "Custom AI Agents",
+      desc: "Proprietary AI agents that run 24/7 — handling tasks from automated member management and content scheduling to payment processing and alert systems.",
       logo: (
         <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
           <rect width="40" height="40" rx="10" fill={ACCENT} fillOpacity="0.15" stroke={ACCENT} strokeWidth="1" />
@@ -675,7 +735,7 @@ function TechStack() {
     {
       name: "Predictive Analytics",
       role: "Data Intelligence",
-      desc: "Machine learning models forecast campaign performance, detect ad fatigue before it impacts CPA, and recommend budget shifts in real-time for maximum efficiency.",
+      desc: "Machine learning models that forecast outcomes, detect problems before they impact your business, and recommend actions in real-time.",
       logo: (
         <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
           <rect width="40" height="40" rx="10" fill="#8B5CF6" fillOpacity="0.15" stroke="#8B5CF6" strokeWidth="1" />
@@ -687,8 +747,8 @@ function TechStack() {
     },
     {
       name: "Real-Time Dashboards",
-      role: "Performance Visibility",
-      desc: "AI-powered dashboards give you instant visibility into every metric that matters — updated in real-time, with anomaly detection and automated insight summaries.",
+      role: "Full Visibility",
+      desc: "Custom-built dashboards with live data, anomaly detection, and automated insight summaries — so you always know exactly what's happening in your business.",
       logo: (
         <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
           <rect width="40" height="40" rx="10" fill="#F59E0B" fillOpacity="0.15" stroke="#F59E0B" strokeWidth="1" />
@@ -706,7 +766,6 @@ function TechStack() {
       background: BG_DARK, padding: "120px 32px", position: "relative",
       overflow: "hidden",
     }}>
-      {/* Animated circuit-board bg pattern */}
       <div style={{
         position: "absolute", inset: 0, opacity: 0.03, pointerEvents: "none",
         backgroundImage: `
@@ -717,7 +776,6 @@ function TechStack() {
         backgroundSize: "100px 100px, 80px 80px, 120px 120px",
       }} />
 
-      {/* Glow effect */}
       <div style={{
         position: "absolute", top: "20%", left: "50%", transform: "translateX(-50%)",
         width: 600, height: 600, borderRadius: "50%",
@@ -727,23 +785,21 @@ function TechStack() {
 
       <div style={{ maxWidth: 1320, margin: "0 auto", position: "relative", zIndex: 1 }}>
         <div style={{ textAlign: "center", marginBottom: 72 }}>
-          <SectionLabel light>POWERED BY AI</SectionLabel>
+          <SectionLabel light>OUR TECHNOLOGY</SectionLabel>
           <h2 style={{
             fontSize: "clamp(28px, 3.5vw, 48px)",
-            fontWeight: 400,
-            lineHeight: 1.2,
-            color: TEXT_WHITE,
-            marginBottom: 20,
+            fontWeight: 400, lineHeight: 1.2,
+            color: TEXT_WHITE, marginBottom: 20,
           }}>
-            Cutting-edge technology,{" "}
-            <span style={{ color: ACCENT }}>real results</span>
+            Built with the{" "}
+            <span style={{ color: ACCENT }}>best tools</span> available
           </h2>
           <p style={{
             fontSize: 16, lineHeight: 1.7, color: TEXT_MUTED,
             maxWidth: 600, margin: "0 auto",
           }}>
-            We don't just run ads — we deploy the most advanced AI models and automation
-            tools available to give your campaigns an unfair advantage.
+            We combine the most advanced AI models, custom integrations, and proven marketing
+            platforms to build systems that actually work — and keep working.
           </p>
         </div>
 
@@ -756,34 +812,13 @@ function TechStack() {
             <TechCard key={i} {...tool} />
           ))}
         </div>
-
-        {/* Bottom trust line */}
-        <div style={{
-          textAlign: "center", marginTop: 64,
-          padding: "24px 32px",
-          borderRadius: 16,
-          border: `1px solid ${BORDER}`,
-          background: BG_CARD,
-        }}>
-          <p style={{
-            fontSize: 15, color: TEXT_MUTED, lineHeight: 1.7, margin: 0,
-          }}>
-            <span style={{ color: ACCENT, fontWeight: 500 }}>Why does this matter?</span>{" "}
-            While most agencies still rely on manual processes, we use AI to analyse thousands of data points
-            per campaign — spotting patterns, predicting performance, and optimising budgets faster than any human team could alone.
-          </p>
-        </div>
       </div>
     </section>
   );
 }
 
 function TechCard({ name, role, desc, logo, accent }: {
-  name: string;
-  role: string;
-  desc: string;
-  logo: React.ReactNode;
-  accent: string;
+  name: string; role: string; desc: string; logo: React.ReactNode; accent: string;
 }) {
   const [hovered, setHovered] = useState(false);
   return (
@@ -791,31 +826,23 @@ function TechCard({ name, role, desc, logo, accent }: {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        padding: "32px 28px",
-        borderRadius: 16,
+        padding: "32px 28px", borderRadius: 16,
         border: `1px solid ${hovered ? accent + "40" : BORDER}`,
         background: hovered ? BG_CARD : "transparent",
-        transition: "all 0.3s ease",
-        cursor: "default",
-        position: "relative",
-        overflow: "hidden",
+        transition: "all 0.3s ease", cursor: "default",
+        position: "relative", overflow: "hidden",
       }}
     >
-      {/* Subtle glow on hover */}
       {hovered && (
         <div style={{
           position: "absolute", top: 0, left: 0, right: 0, height: 2,
           background: `linear-gradient(90deg, ${accent}, transparent)`,
         }} />
       )}
-
       <div style={{ display: "flex", alignItems: "flex-start", gap: 16, marginBottom: 16 }}>
         <div style={{ flexShrink: 0 }}>{logo}</div>
         <div>
-          <h3 style={{
-            fontSize: 17, fontWeight: 500, color: TEXT_WHITE,
-            marginBottom: 2,
-          }}>
+          <h3 style={{ fontSize: 17, fontWeight: 500, color: TEXT_WHITE, marginBottom: 2 }}>
             {name}
           </h3>
           <span style={{
@@ -826,38 +853,36 @@ function TechCard({ name, role, desc, logo, accent }: {
           </span>
         </div>
       </div>
-      <p style={{
-        fontSize: 14, lineHeight: 1.7, color: TEXT_MUTED, margin: 0,
-      }}>
+      <p style={{ fontSize: 14, lineHeight: 1.7, color: TEXT_MUTED, margin: 0 }}>
         {desc}
       </p>
     </div>
   );
 }
 
-/* ─── Accordion "Why Us" section ─── */
+/* ─── Why Us Section ─── */
 function WhyUs() {
   const [openIdx, setOpenIdx] = useState(0);
   const items = [
     {
       icon: "⚡",
-      title: "Speed to results",
-      content: "We launch campaigns within days, not weeks. Our proven frameworks mean your ads start generating results from week one.",
+      title: "Days, not months",
+      content: "We deploy working systems in days. Our proven frameworks and reusable components mean you get results fast — not a six-month development timeline.",
     },
     {
-      icon: "🎯",
-      title: "Meta Ads specialists",
-      content: "We don't try to do everything. We focus 100% on Meta Ads — Facebook and Instagram — so you get deep expertise, not a generalist approach.",
+      icon: "🤖",
+      title: "AI-native approach",
+      content: "We don't bolt AI on as an afterthought. Every system we build is designed around intelligent automation from the ground up — making them smarter and more efficient than traditional solutions.",
     },
     {
-      icon: "📊",
-      title: "Data-driven decisions",
-      content: "Every optimization is backed by data. We track, test, and iterate continuously to maximize your ROAS and minimize wasted spend.",
+      icon: "🏗️",
+      title: "Custom or pre-built",
+      content: "Need something specific? We build it from scratch. Want to move fast? We have battle-tested frameworks you can plug in and customise. Either way, you get a system that fits your business.",
     },
     {
       icon: "🤝",
-      title: "Transparent partnership",
-      content: "You get full visibility into your campaigns, clear reporting, and direct access to your strategist. No black boxes, no surprises.",
+      title: "Full-service partnership",
+      content: "From AI automations to performance marketing to web development — we handle the entire stack. One team, one relationship, complete visibility into everything we build and manage for you.",
     },
   ];
 
@@ -866,14 +891,11 @@ function WhyUs() {
       background: BG_DARK, padding: "120px 32px", position: "relative",
       overflow: "hidden",
     }}>
-      {/* Wireframe visual on the left */}
       <div style={{
         position: "absolute", left: "-10%", top: "10%",
-        width: "45%", height: "80%", pointerEvents: "none",
-        opacity: 0.15,
+        width: "45%", height: "80%", pointerEvents: "none", opacity: 0.15,
       }}>
         <svg viewBox="0 0 400 400" fill="none" style={{ width: "100%", height: "100%" }}>
-          {/* Wireframe sphere */}
           {Array.from({ length: 8 }).map((_, i) => (
             <ellipse key={i} cx="200" cy="200"
               rx={180} ry={180 * Math.cos((i * Math.PI) / 8)}
@@ -887,12 +909,9 @@ function WhyUs() {
 
       <div style={{ maxWidth: 1320, margin: "0 auto", position: "relative", zIndex: 1 }}>
         <div style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: 80,
-          alignItems: "start",
+          display: "grid", gridTemplateColumns: "1fr 1fr",
+          gap: 80, alignItems: "start",
         }} className="why-us-grid">
-          {/* Left: visual placeholder */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: 400 }} className="why-us-visual">
             <div style={{
               width: 280, height: 280, borderRadius: "50%",
@@ -914,17 +933,14 @@ function WhyUs() {
                   <span style={{ fontSize: 40 }}>🌵</span>
                 </div>
               </div>
-              {/* Orbiting dot */}
               <div style={{
                 position: "absolute", top: -4, left: "50%", transform: "translateX(-50%)",
                 width: 8, height: 8, borderRadius: "50%",
-                background: ACCENT,
-                boxShadow: `0 0 12px ${ACCENT}60`,
+                background: ACCENT, boxShadow: `0 0 12px ${ACCENT}60`,
               }} />
             </div>
           </div>
 
-          {/* Right: accordion */}
           <div>
             <SectionLabel light>WHY US</SectionLabel>
             <h2 style={{
@@ -932,7 +948,7 @@ function WhyUs() {
               fontWeight: 400, lineHeight: 1.2,
               color: TEXT_WHITE, marginBottom: 40,
             }}>
-              Why brands choose Golden Cactus
+              Why businesses choose Golden Cactus
             </h2>
 
             <div style={{ display: "flex", flexDirection: "column" }}>
@@ -962,8 +978,7 @@ function WhyUs() {
                   </button>
                   <div style={{
                     maxHeight: openIdx === i ? 200 : 0,
-                    overflow: "hidden",
-                    transition: "max-height 0.4s ease",
+                    overflow: "hidden", transition: "max-height 0.4s ease",
                   }}>
                     <p style={{
                       fontSize: 14, lineHeight: 1.7, color: TEXT_MUTED,
@@ -985,26 +1000,18 @@ function WhyUs() {
 
 /* ─── Pricing Section ─── */
 function PricingCard({ icon, name, desc, pricing, includes }: {
-  icon: string;
-  name: string;
-  desc: string;
+  icon: string; name: string; desc: string;
   pricing: { label: string; sublabel: string; price: string; suffix?: string }[];
   includes: string[];
 }) {
   return (
     <div style={{
-      borderRadius: 20,
-      border: `1px solid #e5e5e5`,
-      overflow: "hidden",
-      background: "#fafafa",
-      display: "flex",
-      flexDirection: "column",
+      borderRadius: 20, border: `1px solid #e5e5e5`,
+      overflow: "hidden", background: "#fafafa",
+      display: "flex", flexDirection: "column",
     }}>
-      {/* Header */}
       <div style={{
-        background: BG_DARK,
-        padding: "36px 32px 32px",
-        position: "relative",
+        background: BG_DARK, padding: "36px 32px 32px", position: "relative",
       }}>
         <div style={{
           position: "absolute", top: 0, left: 0, right: 0, height: 3,
@@ -1023,7 +1030,6 @@ function PricingCard({ icon, name, desc, pricing, includes }: {
         </p>
       </div>
 
-      {/* Pricing tiers */}
       <div style={{ padding: "28px 32px", display: "flex", flexDirection: "column", gap: 10 }}>
         {pricing.map((tier, i) => (
           <div key={i} style={{
@@ -1042,8 +1048,7 @@ function PricingCard({ icon, name, desc, pricing, includes }: {
             </div>
             <div style={{ textAlign: "right" }}>
               <div style={{
-                fontSize: 26, fontWeight: 500, color: TEXT_DARK,
-                letterSpacing: "-0.02em",
+                fontSize: 26, fontWeight: 500, color: TEXT_DARK, letterSpacing: "-0.02em",
               }}>
                 {tier.price}
               </div>
@@ -1053,12 +1058,10 @@ function PricingCard({ icon, name, desc, pricing, includes }: {
         ))}
       </div>
 
-      {/* Divider */}
       <div style={{ padding: "0 32px" }}>
         <div style={{ height: 1, background: "#e5e5e5" }} />
       </div>
 
-      {/* What's included */}
       <div style={{ padding: "28px 32px 36px", flex: 1, display: "flex", flexDirection: "column" }}>
         <div style={{
           fontSize: 12, fontWeight: 600, letterSpacing: "0.1em",
@@ -1105,15 +1108,32 @@ function PricingCard({ icon, name, desc, pricing, includes }: {
 function Pricing() {
   const plans = [
     {
+      icon: "🤖",
+      name: "AI AUTOMATION SYSTEM",
+      desc: "Custom-built automation systems tailored to your business — from subscriptions to onboarding to content distribution.",
+      pricing: [
+        { label: "Setup", sublabel: "System design, build & deploy", price: "from £2,500" },
+        { label: "Maintenance", sublabel: "Ongoing support & optimisation", price: "£300", suffix: "/month" },
+      ],
+      includes: [
+        "Custom system architecture",
+        "AI-powered automation & bots",
+        "Payment & access integrations",
+        "Admin dashboard included",
+        "Deployment & testing",
+        "Ongoing maintenance & updates",
+      ],
+    },
+    {
       icon: "📣",
-      name: "META ADS STARTER",
-      desc: "Everything you need to launch, test, and scale your Meta Ads campaigns.",
+      name: "PERFORMANCE MARKETING",
+      desc: "Full-service Meta Ads and Google Ads management to generate leads, drive sales, and scale your customer acquisition.",
       pricing: [
         { label: "Month 1", sublabel: "Setup + initial testing", price: "£300" },
         { label: "Ongoing", sublabel: "Monthly management", price: "£600", suffix: "/month" },
       ],
       includes: [
-        "Campaign setup & structure",
+        "Campaign setup & strategy",
         "Creative testing (static + video)",
         "Audience research & targeting",
         "Weekly optimisation & scaling",
@@ -1122,63 +1142,45 @@ function Pricing() {
       ],
     },
     {
-      icon: "🤖",
-      name: "AI AUTOMATION",
-      desc: "Streamline your operations with intelligent automation that saves hours every week.",
-      pricing: [
-        { label: "Starting from", sublabel: "Custom scoped per project", price: "£450", suffix: "/month" },
-      ],
-      includes: [
-        "AI chatbots for your business",
-        "Automating repetitive tasks",
-        "Email & message automation",
-        "Automated content posting",
-        "Basic workflow automation",
-      ],
-    },
-    {
       icon: "🚀",
-      name: "WEBSITE + GROWTH STACK",
-      desc: "A complete digital foundation — from website to CRM to performance tracking.",
+      name: "FULL GROWTH STACK",
+      desc: "Complete digital infrastructure — AI automations, marketing, website, and analytics all working together as one system.",
       pricing: [
-        { label: "Starting from", sublabel: "Custom scoped per project", price: "£800", suffix: "/project" },
+        { label: "Starting from", sublabel: "Custom scoped per project", price: "£3,500", suffix: "setup" },
+        { label: "Ongoing", sublabel: "Full-service management", price: "from £800", suffix: "/month" },
       ],
       includes: [
-        "Website creation & design",
-        "CRM system implementation",
-        "Basic SEO setup",
-        "Third-party integrations",
-        "Performance & tracking setup",
+        "Everything in both plans",
+        "Website design & development",
+        "CRM & analytics setup",
+        "Multi-channel automation",
+        "Priority support & strategy",
+        "Quarterly business reviews",
       ],
     },
   ];
 
   return (
-    <section id="pricing" style={{
-      background: BG_LIGHT, padding: "120px 32px",
-    }}>
+    <section id="pricing" style={{ background: BG_LIGHT, padding: "120px 32px" }}>
       <div style={{ maxWidth: 1320, margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: 60 }}>
           <SectionLabel>PRICING</SectionLabel>
           <h2 style={{
             fontSize: "clamp(28px, 3.5vw, 48px)",
-            fontWeight: 400,
-            lineHeight: 1.2,
-            color: TEXT_DARK,
-            marginBottom: 16,
+            fontWeight: 400, lineHeight: 1.2,
+            color: TEXT_DARK, marginBottom: 16,
           }}>
             Simple, transparent pricing
           </h2>
           <p style={{ fontSize: 15, lineHeight: 1.7, color: "#666", maxWidth: 520, margin: "0 auto" }}>
-            No hidden fees. No long-term contracts. Pick what you need — or combine services for a full growth engine.
+            No hidden fees. No long-term contracts. Pick what you need — or combine everything for a complete growth engine.
           </p>
         </div>
 
         <div style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-          gap: 24,
-          alignItems: "stretch",
+          gap: 24, alignItems: "stretch",
         }} className="pricing-grid">
           {plans.map((plan, i) => (
             <PricingCard key={i} {...plan} />
@@ -1192,12 +1194,8 @@ function Pricing() {
 /* ─── Contact Form Section ─── */
 function ContactForm() {
   const [formData, setFormData] = useState({
-    companyName: "",
-    websiteUrl: "",
-    monthlyRevenue: "",
-    name: "",
-    email: "",
-    phone: "",
+    companyName: "", websiteUrl: "", monthlyRevenue: "",
+    name: "", email: "", phone: "", interest: "",
   });
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -1210,24 +1208,23 @@ function ContactForm() {
     if (submitting) return;
     setSubmitting(true);
     try {
-      // Send form data to the API endpoint
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          companyName: formData.companyName,
-          websiteUrl: formData.websiteUrl || undefined,
-          monthlyRevenue: formData.monthlyRevenue,
+          name: formData.name, email: formData.email, phone: formData.phone,
+          companyName: formData.companyName, websiteUrl: formData.websiteUrl || undefined,
+          monthlyRevenue: formData.monthlyRevenue, interest: formData.interest,
         }),
       });
       if (!res.ok) throw new Error("API error");
+      if (typeof window !== 'undefined' && (window as any).fbq) {
+        (window as any).fbq('track', 'Lead', {
+          content_name: 'Contact Form', content_category: 'Lead Generation',
+        });
+      }
       setSubmitted(true);
-    } catch (err) {
-      console.error("Form submission failed:", err);
-      // Still show thank you to not frustrate the user
+    } catch {
       setSubmitted(true);
     } finally {
       setSubmitting(false);
@@ -1235,57 +1232,47 @@ function ContactForm() {
   };
 
   const inputStyle: React.CSSProperties = {
-    width: "100%",
-    padding: "14px 16px",
-    borderRadius: 10,
-    border: `1px solid ${BORDER}`,
-    background: BG_CARD,
-    color: TEXT_WHITE,
-    fontSize: 14,
-    outline: "none",
-    transition: "border-color 0.2s",
-    boxSizing: "border-box",
+    width: "100%", padding: "14px 16px", borderRadius: 10,
+    border: `1px solid ${BORDER}`, background: BG_CARD,
+    color: TEXT_WHITE, fontSize: 14, outline: "none",
+    transition: "border-color 0.2s", boxSizing: "border-box",
   };
 
   const labelStyle: React.CSSProperties = {
-    fontSize: 12,
-    fontWeight: 500,
-    letterSpacing: "0.06em",
-    textTransform: "uppercase",
-    color: TEXT_MUTED,
-    marginBottom: 8,
-    display: "block",
+    fontSize: 12, fontWeight: 500, letterSpacing: "0.06em",
+    textTransform: "uppercase", color: TEXT_MUTED,
+    marginBottom: 8, display: "block",
   };
 
+  const interestOptions = [
+    "Select what you're interested in",
+    "AI Automation System",
+    "Performance Marketing (Meta/Google Ads)",
+    "Full Growth Stack",
+    "Custom project — let's talk",
+  ];
+
   const revenueOptions = [
-    "Select range",
-    "Under £5,000",
-    "£5,000 – £15,000",
-    "£15,000 – £50,000",
-    "£50,000 – £100,000",
-    "£100,000+",
+    "Select range", "Under £5,000", "£5,000 – £15,000",
+    "£15,000 – £50,000", "£50,000 – £100,000", "£100,000+",
   ];
 
   if (submitted) {
     return (
       <section id="contact" style={{
-        background: BG_DARK, padding: "120px 32px",
-        borderTop: `1px solid ${BORDER}`,
+        background: BG_DARK, padding: "120px 32px", borderTop: `1px solid ${BORDER}`,
       }}>
         <div style={{
           maxWidth: 560, margin: "0 auto", textAlign: "center",
-          padding: "80px 40px",
-          borderRadius: 20, border: `1px solid ${BORDER}`,
-          background: BG_CARD,
+          padding: "80px 40px", borderRadius: 20,
+          border: `1px solid ${BORDER}`, background: BG_CARD,
         }}>
           <div style={{ fontSize: 48, marginBottom: 20 }}>🌵</div>
-          <h2 style={{
-            fontSize: 28, fontWeight: 500, color: TEXT_WHITE, marginBottom: 12,
-          }}>
+          <h2 style={{ fontSize: 28, fontWeight: 500, color: TEXT_WHITE, marginBottom: 12 }}>
             Thanks for reaching out!
           </h2>
           <p style={{ fontSize: 15, color: TEXT_MUTED, lineHeight: 1.7 }}>
-            We'll review your details and get back to you within 24 hours.
+            We'll review your details and get back to you within 24 hours with a tailored plan.
           </p>
         </div>
       </section>
@@ -1298,7 +1285,6 @@ function ContactForm() {
       borderTop: `1px solid ${BORDER}`,
       position: "relative", overflow: "hidden",
     }}>
-      {/* Decorative elements */}
       <div style={{
         position: "absolute", right: "-5%", top: "5%",
         width: "35%", height: "90%", pointerEvents: "none", opacity: 0.08,
@@ -1312,37 +1298,30 @@ function ContactForm() {
 
       <div style={{ maxWidth: 1320, margin: "0 auto", position: "relative", zIndex: 1 }}>
         <div style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: 80,
-          alignItems: "start",
+          display: "grid", gridTemplateColumns: "1fr 1fr",
+          gap: 80, alignItems: "start",
         }} className="contact-grid">
-          {/* Left side — text */}
           <div style={{ paddingTop: 20 }}>
             <AvailabilityDot />
             <h2 style={{
               fontSize: "clamp(32px, 4vw, 52px)",
-              fontWeight: 400,
-              lineHeight: 1.15,
-              color: TEXT_WHITE,
-              marginTop: 20,
-              marginBottom: 24,
+              fontWeight: 400, lineHeight: 1.15,
+              color: TEXT_WHITE, marginTop: 20, marginBottom: 24,
             }}>
-              Ready to scale your ads?
+              Ready to automate your business?
             </h2>
             <p style={{
               fontSize: 16, lineHeight: 1.7, color: TEXT_MUTED,
               maxWidth: 400, marginBottom: 40,
             }}>
-              Fill in the form and we'll get back to you within 24 hours with a tailored growth plan for your business.
+              Tell us what you need and we'll get back to you within 24 hours with a tailored solution — whether it's an AI system, marketing engine, or both.
             </p>
 
-            {/* Quick info */}
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
               {[
                 { icon: "⚡", text: "Free consultation — no commitment" },
-                { icon: "📊", text: "Custom strategy based on your goals" },
-                { icon: "🚀", text: "Launch within days of approval" },
+                { icon: "🤖", text: "Custom system scoped to your needs" },
+                { icon: "🚀", text: "Working prototype within days" },
               ].map((item, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: 12 }}>
                   <span style={{ fontSize: 18 }}>{item.icon}</span>
@@ -1352,110 +1331,88 @@ function ContactForm() {
             </div>
           </div>
 
-          {/* Right side — form */}
           <div>
             <form onSubmit={handleSubmit} style={{
-              background: BG_CARD,
-              borderRadius: 20,
-              border: `1px solid ${BORDER}`,
-              padding: "40px 36px",
+              background: BG_CARD, borderRadius: 20,
+              border: `1px solid ${BORDER}`, padding: "40px 36px",
             }}>
-              <h3 style={{
-                fontSize: 20, fontWeight: 500, color: TEXT_WHITE,
-                marginBottom: 32,
-              }}>
-                Tell us about your business
+              <h3 style={{ fontSize: 20, fontWeight: 500, color: TEXT_WHITE, marginBottom: 32 }}>
+                Tell us about your project
               </h3>
 
               <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-                {/* Name */}
                 <div>
                   <label style={labelStyle}>Name *</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Your full name"
-                    value={formData.name}
-                    onChange={handleChange("name")}
+                  <input type="text" required placeholder="Your full name"
+                    value={formData.name} onChange={handleChange("name")}
                     style={inputStyle}
                     onFocus={e => (e.currentTarget.style.borderColor = ACCENT)}
                     onBlur={e => (e.currentTarget.style.borderColor = BORDER)}
                   />
                 </div>
-
-                {/* Email */}
                 <div>
                   <label style={labelStyle}>Email *</label>
-                  <input
-                    type="email"
-                    required
-                    placeholder="you@company.com"
-                    value={formData.email}
-                    onChange={handleChange("email")}
+                  <input type="email" required placeholder="you@company.com"
+                    value={formData.email} onChange={handleChange("email")}
                     style={inputStyle}
                     onFocus={e => (e.currentTarget.style.borderColor = ACCENT)}
                     onBlur={e => (e.currentTarget.style.borderColor = BORDER)}
                   />
                 </div>
-
-                {/* Phone */}
                 <div>
                   <label style={labelStyle}>Phone number *</label>
-                  <input
-                    type="tel"
-                    required
-                    placeholder="+44 7XXX XXX XXX"
-                    value={formData.phone}
-                    onChange={handleChange("phone")}
+                  <input type="tel" required placeholder="+44 7XXX XXX XXX"
+                    value={formData.phone} onChange={handleChange("phone")}
                     style={inputStyle}
                     onFocus={e => (e.currentTarget.style.borderColor = ACCENT)}
                     onBlur={e => (e.currentTarget.style.borderColor = BORDER)}
                   />
                 </div>
-
-                {/* Company Name */}
                 <div>
                   <label style={labelStyle}>Company name *</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Your company or brand"
-                    value={formData.companyName}
-                    onChange={handleChange("companyName")}
+                  <input type="text" required placeholder="Your company or brand"
+                    value={formData.companyName} onChange={handleChange("companyName")}
                     style={inputStyle}
                     onFocus={e => (e.currentTarget.style.borderColor = ACCENT)}
                     onBlur={e => (e.currentTarget.style.borderColor = BORDER)}
                   />
                 </div>
-
-                {/* Website URL */}
+                <div>
+                  <label style={labelStyle}>Interested in *</label>
+                  <select required value={formData.interest} onChange={handleChange("interest")}
+                    style={{
+                      ...inputStyle, cursor: "pointer", appearance: "none",
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23999' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E")`,
+                      backgroundRepeat: "no-repeat", backgroundPosition: "right 16px center",
+                      paddingRight: 40,
+                    }}
+                    onFocus={e => (e.currentTarget.style.borderColor = ACCENT)}
+                    onBlur={e => (e.currentTarget.style.borderColor = BORDER)}
+                  >
+                    {interestOptions.map(opt => (
+                      <option key={opt} value={opt === "Select what you're interested in" ? "" : opt}
+                        disabled={opt === "Select what you're interested in"}>
+                        {opt}
+                      </option>
+                    ))}
+                  </select>
+                </div>
                 <div>
                   <label style={labelStyle}>Website URL <span style={{ fontWeight: 400, textTransform: "none", letterSpacing: 0 }}>(optional)</span></label>
-                  <input
-                    type="url"
-                    placeholder="https://yourwebsite.com"
-                    value={formData.websiteUrl}
-                    onChange={handleChange("websiteUrl")}
+                  <input type="url" placeholder="https://yourwebsite.com"
+                    value={formData.websiteUrl} onChange={handleChange("websiteUrl")}
                     style={inputStyle}
                     onFocus={e => (e.currentTarget.style.borderColor = ACCENT)}
                     onBlur={e => (e.currentTarget.style.borderColor = BORDER)}
                   />
                 </div>
-
-                {/* Monthly Revenue */}
                 <div>
                   <label style={labelStyle}>Approx. monthly revenue *</label>
-                  <select
-                    required
-                    value={formData.monthlyRevenue}
-                    onChange={handleChange("monthlyRevenue")}
+                  <select required value={formData.monthlyRevenue} onChange={handleChange("monthlyRevenue")}
                     style={{
-                      ...inputStyle,
-                      cursor: "pointer",
-                      appearance: "none",
+                      ...inputStyle, cursor: "pointer", appearance: "none",
                       backgroundImage: `url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23999' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E")`,
-                      backgroundRepeat: "no-repeat",
-                      backgroundPosition: "right 16px center",
+                      backgroundRepeat: "no-repeat", backgroundPosition: "right 16px center",
                       paddingRight: 40,
                     }}
                     onFocus={e => (e.currentTarget.style.borderColor = ACCENT)}
@@ -1469,26 +1426,14 @@ function ContactForm() {
                   </select>
                 </div>
 
-                {/* Submit */}
-                <button
-                  type="submit"
-                  style={{
-                    width: "100%",
-                    padding: "16px 24px",
-                    borderRadius: 12,
-                    border: "none",
-                    background: TEXT_WHITE,
-                    color: TEXT_DARK,
-                    fontSize: 15,
-                    fontWeight: 500,
-                    cursor: "pointer",
-                    transition: "opacity 0.2s",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: 8,
-                    marginTop: 8,
-                  }}
+                <button type="submit" style={{
+                  width: "100%", padding: "16px 24px", borderRadius: 12,
+                  border: "none", background: TEXT_WHITE, color: TEXT_DARK,
+                  fontSize: 15, fontWeight: 500, cursor: "pointer",
+                  transition: "opacity 0.2s",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  gap: 8, marginTop: 8,
+                }}
                   onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
                   onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
                 >
@@ -1519,36 +1464,31 @@ function Footer() {
     }}>
       <div style={{
         maxWidth: 1320, margin: "0 auto",
-        display: "grid",
-        gridTemplateColumns: "2fr 1fr 1fr 1fr",
+        display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr",
         gap: 60,
       }} className="footer-grid">
-        {/* Brand */}
         <div>
           <div style={{ marginBottom: 20 }}>
             <GCLogo size={36} />
           </div>
           <p style={{
-            fontSize: 13, lineHeight: 1.7, color: TEXT_MUTED,
-            maxWidth: 280,
+            fontSize: 13, lineHeight: 1.7, color: TEXT_MUTED, maxWidth: 280,
           }}>
-            Performance marketing agency specializing in Meta Ads. We help brands grow revenue and scale profitably.
+            AI systems and automation agency. We build intelligent systems that automate operations, drive growth, and scale businesses.
           </p>
         </div>
 
-        {/* Services */}
         <div>
           <h4 style={{
             fontSize: 12, fontWeight: 500, letterSpacing: "0.12em",
             textTransform: "uppercase", color: TEXT_MUTED, marginBottom: 20,
           }}>
-            Services
+            Solutions
           </h4>
-          {["Meta Ads Management", "Ad Creative", "Strategy & Audits", "Landing Pages", "Analytics"].map(s => (
-            <a key={s} href="#services" style={{
+          {["AI Automations", "Performance Marketing", "Dashboards & Analytics", "Websites & CRO", "Integrations"].map(s => (
+            <a key={s} href="#solutions" style={{
               display: "block", fontSize: 13, color: "#777",
-              textDecoration: "none", marginBottom: 10,
-              transition: "color 0.2s",
+              textDecoration: "none", marginBottom: 10, transition: "color 0.2s",
             }}
               onMouseEnter={e => (e.currentTarget.style.color = TEXT_WHITE)}
               onMouseLeave={e => (e.currentTarget.style.color = "#777")}
@@ -1558,7 +1498,6 @@ function Footer() {
           ))}
         </div>
 
-        {/* Company */}
         <div>
           <h4 style={{
             fontSize: 12, fontWeight: 500, letterSpacing: "0.12em",
@@ -1567,14 +1506,15 @@ function Footer() {
             Company
           </h4>
           {[
-            { label: "Results", href: "#results" },
+            { label: "Use Cases", href: "#use-cases" },
             { label: "Process", href: "#process" },
+            { label: "Technology", href: "#technology" },
+            { label: "Pricing", href: "#pricing" },
             { label: "Contact", href: "#contact" },
           ].map(l => (
             <a key={l.label} href={l.href} style={{
               display: "block", fontSize: 13, color: "#777",
-              textDecoration: "none", marginBottom: 10,
-              transition: "color 0.2s",
+              textDecoration: "none", marginBottom: 10, transition: "color 0.2s",
             }}
               onMouseEnter={e => (e.currentTarget.style.color = TEXT_WHITE)}
               onMouseLeave={e => (e.currentTarget.style.color = "#777")}
@@ -1584,7 +1524,6 @@ function Footer() {
           ))}
         </div>
 
-        {/* Contact */}
         <div>
           <h4 style={{
             fontSize: 12, fontWeight: 500, letterSpacing: "0.12em",
@@ -1594,8 +1533,7 @@ function Footer() {
           </h4>
           <a href="mailto:info@goldencactus.co" style={{
             display: "block", fontSize: 13, color: "#777",
-            textDecoration: "none", marginBottom: 10,
-            transition: "color 0.2s",
+            textDecoration: "none", marginBottom: 10, transition: "color 0.2s",
           }}
             onMouseEnter={e => (e.currentTarget.style.color = TEXT_WHITE)}
             onMouseLeave={e => (e.currentTarget.style.color = "#777")}
@@ -1608,10 +1546,8 @@ function Footer() {
         </div>
       </div>
 
-      {/* Bottom bar */}
       <div style={{
-        maxWidth: 1320, margin: "40px auto 0",
-        paddingTop: 20,
+        maxWidth: 1320, margin: "40px auto 0", paddingTop: 20,
         borderTop: `1px solid ${BORDER}`,
         display: "flex", justifyContent: "space-between", alignItems: "center",
         flexWrap: "wrap", gap: 12,
@@ -1648,6 +1584,8 @@ function ResponsiveStyles() {
         .contact-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
         .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
         .tech-grid { grid-template-columns: 1fr !important; }
+        .use-cases-grid { grid-template-columns: 1fr !important; }
+        .pricing-grid { grid-template-columns: 1fr !important; }
       }
 
       @media (min-width: 769px) {
@@ -1659,7 +1597,6 @@ function ResponsiveStyles() {
         .footer-grid { grid-template-columns: 1fr !important; }
       }
 
-      /* Smooth scroll offset for fixed nav */
       [id] { scroll-margin-top: 80px; }
     `}</style>
   );
@@ -1673,10 +1610,11 @@ export function LandingPage() {
       <Nav />
       <Hero />
       <WhoWeAre />
-      <Services />
-      <TechStack />
+      <UseCases />
+      <Solutions />
       <Results />
       <Process />
+      <TechStack />
       <WhyUs />
       <Pricing />
       <ContactForm />
