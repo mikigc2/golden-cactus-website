@@ -3,6 +3,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { Toaster } from "./components/ui/sonner";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LandingPage } from "./pages";
+import { BlogPostPage } from "./pages/BlogPostPage";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Toaster />
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </ThemeProvider>

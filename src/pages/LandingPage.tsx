@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { ShaderBackground } from "../components/ShaderBackground";
+import { getLatestPosts } from "../data/blogPosts";
 
 /* ─── Colour tokens (premium muted palette) ─── */
 const ACCENT = "#C9A84C";
@@ -96,6 +98,7 @@ function Nav() {
     { label: "Technology", href: "#technology" },
     { label: "Stacks", href: "#stacks" },
     { label: "Results", href: "#results" },
+    { label: "Blog", href: "#blog" },
     { label: "Contact", href: "#contact" },
   ];
 
@@ -1071,6 +1074,149 @@ function Stacks() {
   );
 }
 
+/* ─── Blog Preview Section ─── */
+function BlogPreview() {
+  const posts = getLatestPosts(3);
+  if (posts.length === 0) return null;
+
+  return (
+    <section id="blog" style={{ background: BG_DARK, padding: "120px 32px", borderTop: `1px solid #222` }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+        {/* Header */}
+        <div style={{ textAlign: "center", marginBottom: "64px" }}>
+          <span style={{
+            display: "inline-block",
+            background: "rgba(201,168,76,0.12)",
+            color: ACCENT,
+            fontSize: "0.7rem",
+            fontWeight: 700,
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
+            padding: "6px 16px",
+            borderRadius: "100px",
+            marginBottom: "20px",
+          }}>
+            Insights
+          </span>
+          <h2 style={{
+            fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
+            fontWeight: 700,
+            color: TEXT_WHITE,
+            letterSpacing: "-0.03em",
+            lineHeight: 1.15,
+            marginBottom: "16px",
+          }}>
+            From the field
+          </h2>
+          <p style={{
+            color: TEXT_MUTED,
+            fontSize: "1.05rem",
+            maxWidth: "520px",
+            margin: "0 auto",
+            lineHeight: 1.6,
+          }}>
+            Real strategies, real numbers. No fluff marketing advice — just what actually works.
+          </p>
+        </div>
+
+        {/* Post cards */}
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+          gap: "24px",
+        }}>
+          {posts.map((post) => (
+            <Link
+              key={post.slug}
+              to={`/blog/${post.slug}`}
+              style={{
+                textDecoration: "none",
+                background: BG_CARD,
+                border: `1px solid #282828`,
+                borderRadius: "16px",
+                padding: "32px",
+                display: "flex",
+                flexDirection: "column",
+                transition: "border-color 0.3s, transform 0.3s",
+                cursor: "pointer",
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.borderColor = ACCENT;
+                e.currentTarget.style.transform = "translateY(-4px)";
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.borderColor = "#282828";
+                e.currentTarget.style.transform = "translateY(0)";
+              }}
+            >
+              {/* Category & read time */}
+              <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
+                <span style={{
+                  background: "rgba(201,168,76,0.12)",
+                  color: ACCENT,
+                  fontSize: "0.65rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  padding: "4px 10px",
+                  borderRadius: "100px",
+                }}>
+                  {post.category}
+                </span>
+                <span style={{ color: "#555", fontSize: "0.8rem" }}>{post.readTime}</span>
+              </div>
+
+              {/* Title */}
+              <h3 style={{
+                fontSize: "1.25rem",
+                fontWeight: 600,
+                color: TEXT_WHITE,
+                lineHeight: 1.35,
+                marginBottom: "12px",
+                letterSpacing: "-0.01em",
+              }}>
+                {post.title}
+              </h3>
+
+              {/* Excerpt */}
+              <p style={{
+                fontSize: "0.9rem",
+                color: TEXT_MUTED,
+                lineHeight: 1.6,
+                flex: 1,
+                marginBottom: "20px",
+              }}>
+                {post.excerpt.length > 150 ? post.excerpt.slice(0, 150) + "..." : post.excerpt}
+              </p>
+
+              {/* Footer */}
+              <div style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                borderTop: "1px solid #282828",
+                paddingTop: "16px",
+              }}>
+                <span style={{ fontSize: "0.8rem", color: "#555" }}>
+                  {new Date(post.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+                </span>
+                <span style={{
+                  fontSize: "0.8rem",
+                  color: ACCENT,
+                  fontWeight: 600,
+                  letterSpacing: "0.03em",
+                }}>
+                  Read more →
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─── Contact Form Section ─── */
 function ContactForm() {
   const [formData, setFormData] = useState({
@@ -1516,6 +1662,7 @@ export function LandingPage() {
       <TechStack />
       <WhyUs />
       <Stacks />
+      <BlogPreview />
       <ContactForm />
       <Footer />
     </div>
