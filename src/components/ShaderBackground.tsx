@@ -211,11 +211,11 @@ void main() {
 }
 `;
 
-/* ── Green-cactus colour palette (tuned for subtlety) ── */
+/* ── Gold-cactus colour palette (premium muted gold) ── */
 const DEFAULT_COLORS = {
-  color1: [0.0, 0.65, 0.08],     // Muted emerald green
+  color1: [0.78, 0.66, 0.30],    // Muted gold (#C7A84C)
   color2: [0.04, 0.04, 0.04],    // #0a0a0a — near black
-  color3: [0.0, 0.32, 0.06],     // Dark forest green
+  color3: [0.40, 0.33, 0.15],    // Dark warm bronze
 };
 
 interface Props {

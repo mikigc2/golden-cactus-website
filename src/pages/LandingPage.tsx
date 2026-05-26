@@ -1,32 +1,15 @@
 import { useState, useEffect } from "react";
 import { ShaderBackground } from "../components/ShaderBackground";
 
-/* ─── Colour tokens (Grafit-inspired) ─── */
-const ACCENT = "#00ff00";
-const BG_DARK = "#0a0a0a";
-const BG_CARD = "#141414";
-const BG_LIGHT = "#ffffff";
-const TEXT_WHITE = "#ffffff";
-const TEXT_MUTED = "#999999";
-const TEXT_DARK = "#0a0a0a";
-const BORDER = "#222222";
-
-/* ─── GC Logo as SVG ─── */
-function GCLogo({ size = 36 }: { size?: number }) {
-  return (
-    <svg width={size} height={size * 0.6} viewBox="0 0 100 60" fill="none">
-      <path
-        d="M25 5C12 5 2 16 2 30s10 25 23 25c10 0 18-6 21-14H30v-8h24v26h-8v-6c-5 6-12 10-21 10C11 63 0 49 0 30S11-3 25-3c11 0 20 6 24 15l-8 4c-3-6-9-11-16-11z"
-        fill={TEXT_WHITE}
-      />
-      <path
-        d="M75 5C62 5 52 16 52 30s10 25 23 25c9 0 17-5 21-13l-8-4c-3 5-8 9-13 9-9 0-15-7-15-17s6-17 15-17c5 0 10 4 13 9l8-4C92 10 84 5 75 5z"
-        fill={TEXT_WHITE}
-      />
-      <line x1="44" y1="30" x2="54" y2="30" stroke={ACCENT} strokeWidth="2" />
-    </svg>
-  );
-}
+/* ─── Colour tokens (premium muted palette) ─── */
+const ACCENT = "#C9A84C";
+const BG_DARK = "#0e0e0e";
+const BG_CARD = "#181818";
+const BG_LIGHT = "#faf9f6";
+const TEXT_WHITE = "#f5f0eb";
+const TEXT_MUTED = "#888888";
+const TEXT_DARK = "#1a1a1a";
+const BORDER = "#282828";
 
 /* ─── Arrow icon ─── */
 function ArrowIcon({ size = 16 }: { size?: number }) {
@@ -46,7 +29,7 @@ function AvailabilityDot() {
         boxShadow: `0 0 6px ${ACCENT}40`,
         animation: "pulse-dot 2s ease-in-out infinite",
       }} />
-      Available for new projects
+      Available for new clients
     </span>
   );
 }
@@ -89,7 +72,7 @@ function SectionLabel({ children, light = false }: { children: string; light?: b
     <p style={{
       fontSize: 12, fontWeight: 500, letterSpacing: "0.15em",
       textTransform: "uppercase",
-      color: light ? TEXT_MUTED : "#888",
+      color: light ? ACCENT : "#999",
       marginBottom: 16,
     }}>
       {children}
@@ -110,9 +93,9 @@ function Nav() {
 
   const links = [
     { label: "Solutions", href: "#solutions" },
-    { label: "Use Cases", href: "#use-cases" },
     { label: "Technology", href: "#technology" },
-    { label: "Pricing", href: "#pricing" },
+    { label: "Stacks", href: "#stacks" },
+    { label: "Results", href: "#results" },
     { label: "Contact", href: "#contact" },
   ];
 
@@ -130,7 +113,7 @@ function Nav() {
         height: 72,
       }}>
         <a href="#" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
-          <GCLogo size={38} />
+          <img src="/gc-logo.png" alt="Golden Cactus Co." style={{ height: 38, width: "auto" }} />
         </a>
 
         <div style={{ display: "flex", alignItems: "center", gap: 36 }} className="nav-desktop">
@@ -179,7 +162,6 @@ function Nav() {
         </button>
       </div>
 
-      {/* Mobile menu */}
       {mobileOpen && (
         <div className="nav-mobile-menu" style={{
           background: "rgba(10,10,10,0.98)", padding: "20px 32px 32px",
@@ -213,7 +195,7 @@ function Hero() {
         maxWidth: 1320, margin: "0 auto", padding: "80px 32px 60px",
         position: "relative", zIndex: 1,
       }}>
-        <SectionLabel light>AI SYSTEMS & AUTOMATION AGENCY</SectionLabel>
+        <SectionLabel light>AI SYSTEMS &amp; AUTOMATION AGENCY</SectionLabel>
 
         <h1 style={{
           fontSize: "clamp(42px, 5.5vw, 80px)",
@@ -256,7 +238,7 @@ function Hero() {
 function HighlightChip({ children }: { children: React.ReactNode }) {
   return (
     <span style={{
-      display: "inline-block", background: "#f0f0f0",
+      display: "inline-block", background: "#f0ede8",
       padding: "6px 14px", borderRadius: 10,
       whiteSpace: "nowrap", margin: "4px auto",
       maxWidth: "calc(100vw - 60px)", overflow: "hidden",
@@ -277,9 +259,9 @@ function WhoWeAre() {
           fontWeight: 400, lineHeight: 1.7, color: TEXT_DARK,
         }}>
           We help businesses<br />
-          <HighlightChip>automate operations 🤖</HighlightChip><br />
-          <HighlightChip>save hundreds of hours ⏰</HighlightChip><br />
-          <HighlightChip>scale efficiently 🚀</HighlightChip><br />
+          <HighlightChip>automate operations</HighlightChip><br />
+          <HighlightChip>save hundreds of hours</HighlightChip><br />
+          <HighlightChip>scale efficiently</HighlightChip><br />
           without hiring extra teams.
         </h2>
       </div>
@@ -287,57 +269,17 @@ function WhoWeAre() {
   );
 }
 
-/* ─── Use Cases Section (NEW) ─── */
+/* ─── Use Cases Section ─── */
 function UseCases() {
   const cases = [
-    {
-      icon: "💳",
-      title: "Membership & Subscription Systems",
-      desc: "Automated payment collection, access management, and member lifecycle — from sign-up to renewal reminders.",
-      tags: ["Stripe", "Telegram", "Auto-Access"],
-    },
-    {
-      icon: "🤖",
-      title: "AI Support & Assistant Systems",
-      desc: "Intelligent chatbots and AI assistants that handle customer queries, qualify leads, and escalate when needed.",
-      tags: ["Chatbots", "NLP", "24/7 Support"],
-    },
-    {
-      icon: "👋",
-      title: "Community Onboarding Automations",
-      desc: "Automated welcome flows, KYC, role assignment, and guided onboarding for Telegram, Discord, or Slack communities.",
-      tags: ["Telegram", "Discord", "Welcome Flows"],
-    },
-    {
-      icon: "💰",
-      title: "Payment & Access Workflows",
-      desc: "End-to-end payment processing with automatic access granting, grace periods, and churn recovery — fully hands-off.",
-      tags: ["Payments", "Webhooks", "Auto-Kick"],
-    },
-    {
-      icon: "🎯",
-      title: "Lead Qualification Pipelines",
-      desc: "AI-powered lead scoring, automated follow-ups, and smart routing that turns inbound traffic into qualified prospects.",
-      tags: ["CRM", "Scoring", "Automation"],
-    },
-    {
-      icon: "📡",
-      title: "Automated Content Distribution",
-      desc: "Schedule, generate, and distribute content across multiple channels with AI — social media, email, Telegram, and more.",
-      tags: ["Multi-Channel", "AI Content", "Scheduling"],
-    },
-    {
-      icon: "📊",
-      title: "Internal Dashboards & Workflows",
-      desc: "Custom dashboards, approval flows, and operational tools that replace spreadsheets and manual processes.",
-      tags: ["Dashboards", "Reporting", "Ops"],
-    },
-    {
-      icon: "🔄",
-      title: "Client Onboarding Systems",
-      desc: "AI-powered onboarding that collects info, sets up accounts, triggers welcome sequences, and tracks progress automatically.",
-      tags: ["Forms", "Automation", "Tracking"],
-    },
+    { num: "01", title: "Membership & Subscription Systems", desc: "Automated payment collection, access management, and member lifecycle — from sign-up to renewal reminders.", tags: ["Stripe", "Telegram", "Auto-Access"] },
+    { num: "02", title: "AI Support & Assistant Systems", desc: "Intelligent chatbots and AI assistants that handle customer queries, qualify leads, and escalate when needed.", tags: ["Chatbots", "NLP", "24/7 Support"] },
+    { num: "03", title: "Community Onboarding Automations", desc: "Automated welcome flows, KYC, role assignment, and guided onboarding for Telegram, Discord, or Slack communities.", tags: ["Telegram", "Discord", "Welcome Flows"] },
+    { num: "04", title: "Payment & Access Workflows", desc: "End-to-end payment processing with automatic access granting, grace periods, and churn recovery — fully hands-off.", tags: ["Payments", "Webhooks", "Auto-Kick"] },
+    { num: "05", title: "Lead Qualification Pipelines", desc: "AI-powered lead scoring, automated follow-ups, and smart routing that turns inbound traffic into qualified prospects.", tags: ["CRM", "Scoring", "Automation"] },
+    { num: "06", title: "Automated Content Distribution", desc: "Schedule, generate, and distribute content across multiple channels with AI — social media, email, Telegram, and more.", tags: ["Multi-Channel", "AI Content", "Scheduling"] },
+    { num: "07", title: "Internal Dashboards & Workflows", desc: "Custom dashboards, approval flows, and operational tools that replace spreadsheets and manual processes.", tags: ["Dashboards", "Reporting", "Ops"] },
+    { num: "08", title: "Client Onboarding Systems", desc: "AI-powered onboarding that collects info, sets up accounts, triggers welcome sequences, and tracks progress automatically.", tags: ["Forms", "Automation", "Tracking"] },
   ];
 
   return (
@@ -353,10 +295,7 @@ function UseCases() {
             AI-powered systems for{" "}
             <span style={{ color: ACCENT }}>every part</span> of your business
           </h2>
-          <p style={{
-            fontSize: 16, lineHeight: 1.7, color: TEXT_MUTED,
-            maxWidth: 600, margin: "0 auto",
-          }}>
+          <p style={{ fontSize: 16, lineHeight: 1.7, color: TEXT_MUTED, maxWidth: 600, margin: "0 auto" }}>
             From customer-facing automations to internal operations — we build the systems
             that let you focus on growth while the tech runs itself.
           </p>
@@ -367,8 +306,8 @@ function UseCases() {
           gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
           gap: 16,
         }} className="use-cases-grid">
-          {cases.map((c, i) => (
-            <UseCaseCard key={i} {...c} />
+          {cases.map((c) => (
+            <UseCaseCard key={c.num} {...c} />
           ))}
         </div>
 
@@ -387,7 +326,7 @@ function UseCases() {
   );
 }
 
-function UseCaseCard({ icon, title, desc, tags }: { icon: string; title: string; desc: string; tags: string[] }) {
+function UseCaseCard({ num, title, desc, tags }: { num: string; title: string; desc: string; tags: string[] }) {
   const [hovered, setHovered] = useState(false);
   return (
     <div
@@ -407,7 +346,15 @@ function UseCaseCard({ icon, title, desc, tags }: { icon: string; title: string;
           background: `linear-gradient(90deg, ${ACCENT}, transparent)`,
         }} />
       )}
-      <div style={{ fontSize: 28, marginBottom: 16 }}>{icon}</div>
+      <div style={{
+        width: 40, height: 40, borderRadius: 10,
+        background: `${ACCENT}12`, border: `1px solid ${ACCENT}25`,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        color: ACCENT, fontSize: 14, fontWeight: 600, letterSpacing: "0.02em",
+        marginBottom: 16,
+      }}>
+        {num}
+      </div>
       <h3 style={{ fontSize: 17, fontWeight: 500, color: TEXT_WHITE, marginBottom: 10 }}>
         {title}
       </h3>
@@ -432,42 +379,12 @@ function UseCaseCard({ icon, title, desc, tags }: { icon: string; title: string;
 /* ─── Solutions / Services Section ─── */
 function Solutions() {
   const services = [
-    {
-      icon: "🤖",
-      title: "AI Systems & Automations",
-      desc: "Custom-built intelligent systems that automate your workflows, manage members, process payments, and handle operations.",
-      tags: ["Workflows", "Integrations", "Bots"],
-    },
-    {
-      icon: "📣",
-      title: "Performance Marketing",
-      desc: "Data-driven Meta Ads and Google Ads campaigns that generate leads, drive sales, and scale your customer acquisition profitably.",
-      tags: ["Meta Ads", "Google Ads", "Lead Gen"],
-    },
-    {
-      icon: "🎨",
-      title: "Ad Creative & Content",
-      desc: "High-converting ad creatives, AI-generated content, and scroll-stopping videos that drive action across every platform.",
-      tags: ["Video", "AI Copy", "UGC"],
-    },
-    {
-      icon: "🌐",
-      title: "Websites & Landing Pages",
-      desc: "High-converting websites, landing pages, and sales funnels optimized for performance and designed to convert visitors into customers.",
-      tags: ["Design", "CRO", "Funnels"],
-    },
-    {
-      icon: "📊",
-      title: "Dashboards & Analytics",
-      desc: "Real-time dashboards, automated reporting, and AI-powered analytics that give you visibility into every metric that matters.",
-      tags: ["Reporting", "KPIs", "Real-Time"],
-    },
-    {
-      icon: "🔗",
-      title: "Integrations & APIs",
-      desc: "Connect your tools, platforms, and data sources into one seamless system. Stripe, Telegram, CRMs, email — we wire it all together.",
-      tags: ["Stripe", "APIs", "CRM"],
-    },
+    { num: "01", title: "AI Systems & Automations", desc: "Custom-built intelligent systems that automate your workflows, manage members, process payments, and handle operations.", tags: ["Workflows", "Integrations", "Bots"] },
+    { num: "02", title: "Performance Marketing", desc: "Data-driven Meta Ads and Google Ads campaigns that generate leads, drive sales, and scale your customer acquisition profitably.", tags: ["Meta Ads", "Google Ads", "Lead Gen"] },
+    { num: "03", title: "Ad Creative & Content", desc: "High-converting ad creatives, AI-generated content, and scroll-stopping videos that drive action across every platform.", tags: ["Video", "AI Copy", "UGC"] },
+    { num: "04", title: "Websites & Landing Pages", desc: "High-converting websites, landing pages, and sales funnels optimized for performance and designed to convert visitors into customers.", tags: ["Design", "CRO", "Funnels"] },
+    { num: "05", title: "Dashboards & Analytics", desc: "Real-time dashboards, automated reporting, and AI-powered analytics that give you visibility into every metric that matters.", tags: ["Reporting", "KPIs", "Real-Time"] },
+    { num: "06", title: "Integrations & APIs", desc: "Connect your tools, platforms, and data sources into one seamless system. Stripe, Telegram, CRMs, email — we wire it all together.", tags: ["Stripe", "APIs", "CRM"] },
   ];
 
   return (
@@ -487,31 +404,26 @@ function Solutions() {
               Everything you need to automate and grow
             </h2>
           </div>
-          <p style={{
-            fontSize: 15, lineHeight: 1.7, color: "#666",
-            maxWidth: 380, paddingTop: 32,
-          }}>
+          <p style={{ fontSize: 15, lineHeight: 1.7, color: "#666", maxWidth: 380, paddingTop: 32 }}>
             From AI-powered automation to performance marketing — we combine cutting-edge technology with proven strategies to deliver results.
           </p>
         </div>
 
-        <div style={{ position: "relative" }}>
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            border: `1px solid #e5e5e5`,
-          }}>
-            {services.map((s, i) => (
-              <ServiceCard key={i} {...s} />
-            ))}
-          </div>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+          border: `1px solid #e0ddd8`,
+        }}>
+          {services.map((s) => (
+            <ServiceCard key={s.num} {...s} />
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-function ServiceCard({ icon, title, desc, tags }: { icon: string; title: string; desc: string; tags: string[] }) {
+function ServiceCard({ num, title, desc, tags }: { num: string; title: string; desc: string; tags: string[] }) {
   const [hovered, setHovered] = useState(false);
   return (
     <div
@@ -519,16 +431,21 @@ function ServiceCard({ icon, title, desc, tags }: { icon: string; title: string;
       onMouseLeave={() => setHovered(false)}
       style={{
         padding: "36px 32px",
-        borderRight: `1px solid #e5e5e5`,
-        borderBottom: `1px solid #e5e5e5`,
+        borderRight: `1px solid #e0ddd8`,
+        borderBottom: `1px solid #e0ddd8`,
         transition: "background 0.3s",
-        background: hovered ? "#f8f8f8" : "transparent",
+        background: hovered ? "#f5f2ed" : "transparent",
         cursor: "default", position: "relative",
       }}
     >
       <span style={{ position: "absolute", top: -8, left: -8, color: "#ccc", fontSize: 14, fontWeight: 300 }}>+</span>
       <span style={{ position: "absolute", top: -8, right: -8, color: "#ccc", fontSize: 14, fontWeight: 300 }}>+</span>
-      <div style={{ fontSize: 28, marginBottom: 16 }}>{icon}</div>
+      <div style={{
+        fontSize: 13, fontWeight: 500, color: ACCENT, letterSpacing: "0.08em",
+        marginBottom: 16,
+      }}>
+        {num}
+      </div>
       <h3 style={{ fontSize: 18, fontWeight: 500, color: TEXT_DARK, marginBottom: 12 }}>
         {title}
       </h3>
@@ -539,8 +456,7 @@ function ServiceCard({ icon, title, desc, tags }: { icon: string; title: string;
         {tags.map(t => (
           <span key={t} style={{
             fontSize: 11, padding: "4px 10px", borderRadius: 100,
-            background: "#f0f0f0", color: "#666", fontWeight: 500,
-            letterSpacing: "0.02em",
+            background: "#f0ede8", color: "#666", fontWeight: 500, letterSpacing: "0.02em",
           }}>
             {t}
           </span>
@@ -555,7 +471,7 @@ function Results() {
   const stats = [
     { value: "50+", label: "Systems Built", sub: "automations deployed and running" },
     { value: "10k+", label: "Hours Saved", sub: "for our clients, per year" },
-    { value: "3.5×", label: "Average ROAS", sub: "across ad accounts managed" },
+    { value: "3.5x", label: "Average ROAS", sub: "across ad accounts managed" },
     { value: "93%", label: "Client Retention", sub: "month-over-month" },
   ];
 
@@ -579,7 +495,7 @@ function Results() {
           {stats.map((s, i) => (
             <div key={i} style={{
               padding: "48px 32px",
-              borderLeft: i > 0 ? `1px solid #e5e5e5` : "none",
+              borderLeft: i > 0 ? `1px solid #e0ddd8` : "none",
               position: "relative",
             }}>
               {i === 0 && (
@@ -613,21 +529,9 @@ function Results() {
 /* ─── How It Works / Process ─── */
 function Process() {
   const steps = [
-    {
-      num: "01",
-      title: "Consult & Scope",
-      desc: "We map out your current workflows, identify automation opportunities, and define exactly what to build — whether it's an AI system, a marketing engine, or both.",
-    },
-    {
-      num: "02",
-      title: "Design & Build",
-      desc: "Our team builds your custom system using proven frameworks. You get a fully functional prototype within days, not months.",
-    },
-    {
-      num: "03",
-      title: "Deploy & Optimise",
-      desc: "We deploy your system, connect all integrations, and continuously optimise based on real data. Your automation gets smarter over time.",
-    },
+    { num: "01", title: "Consult & Scope", desc: "We map out your current workflows, identify automation opportunities, and define exactly what to build — whether it's an AI system, a marketing engine, or both." },
+    { num: "02", title: "Design & Build", desc: "Our team builds your custom system using proven frameworks. You get a fully functional prototype within days, not months." },
+    { num: "03", title: "Deploy & Optimise", desc: "We deploy your system, connect all integrations, and continuously optimise based on real data. Your automation gets smarter over time." },
   ];
 
   return (
@@ -674,98 +578,93 @@ function Process() {
 }
 
 /* ─── AI & Technology Section ─── */
+/* Brand logos removed — using real image files + abstract SVG icons */
+
 function TechStack() {
+  /* Elegant abstract SVG icons for non-branded cards */
+  const IconIntegrations = (
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+      <circle cx="10" cy="18" r="3" stroke="#10A37F" strokeWidth="1.5" />
+      <circle cx="26" cy="10" r="3" stroke="#10A37F" strokeWidth="1.5" />
+      <circle cx="26" cy="26" r="3" stroke="#10A37F" strokeWidth="1.5" />
+      <path d="M13 17L23 11M13 19L23 25" stroke="#10A37F" strokeWidth="1" opacity="0.6" />
+    </svg>
+  );
+  const IconAutomation = (
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+      <path d="M8 18C8 12.5 12.5 8 18 8" stroke={ACCENT} strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M28 18C28 23.5 23.5 28 18 28" stroke={ACCENT} strokeWidth="1.5" strokeLinecap="round" />
+      <circle cx="18" cy="8" r="2" fill={ACCENT} opacity="0.8" />
+      <circle cx="18" cy="28" r="2" fill={ACCENT} opacity="0.8" />
+      <circle cx="18" cy="18" r="3" stroke={ACCENT} strokeWidth="1.5" />
+    </svg>
+  );
+  const IconAnalytics = (
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+      <path d="M6 28C10 22 14 12 18 16C22 20 26 8 30 6" stroke="#8B5CF6" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+      <circle cx="18" cy="16" r="2" fill="#8B5CF6" opacity="0.6" />
+      <circle cx="30" cy="6" r="2" fill="#8B5CF6" opacity="0.8" />
+    </svg>
+  );
+  const IconDashboards = (
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+      <rect x="4" y="4" width="12" height="8" rx="2" stroke="#F59E0B" strokeWidth="1.2" opacity="0.7" />
+      <rect x="20" y="4" width="12" height="12" rx="2" stroke="#F59E0B" strokeWidth="1.2" opacity="0.5" />
+      <rect x="4" y="16" width="12" height="16" rx="2" stroke="#F59E0B" strokeWidth="1.2" opacity="0.5" />
+      <rect x="20" y="20" width="12" height="12" rx="2" stroke="#F59E0B" strokeWidth="1.2" opacity="0.7" />
+    </svg>
+  );
+
   const tools = [
     {
-      name: "Claude & GPT-4o",
-      role: "AI Intelligence Layer",
+      name: "Claude & GPT-4o", role: "AI Intelligence Layer",
       desc: "We leverage the most advanced AI models to power your systems — from intelligent chatbots and content generation to data analysis and decision-making workflows.",
-      logo: (
-        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-          <rect width="40" height="40" rx="10" fill="#D97757" />
-          <path d="M25.5 13.5L20 26.5L17.5 19.5L14.5 26.5L12 13.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M28 13.5L22.5 26.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+      icon: (
+        <>
+          <img src="/logo-claude.png" width={34} height={34} style={{ borderRadius: 8 }} alt="Claude" />
+        </>
       ),
       accent: "#D97757",
     },
     {
-      name: "Custom Integrations",
-      role: "Connect Everything",
+      name: "Custom Integrations", role: "Connect Everything",
       desc: "Stripe, Telegram, Discord, Slack, CRMs, email providers, databases — we wire your entire tech stack into one seamless automated system.",
-      logo: (
-        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-          <rect width="40" height="40" rx="10" fill="#10A37F" />
-          <path d="M12 20h16M20 12v16" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
-          <circle cx="12" cy="20" r="3" stroke="white" strokeWidth="1.5" fill="none" />
-          <circle cx="28" cy="20" r="3" stroke="white" strokeWidth="1.5" fill="none" />
-          <circle cx="20" cy="12" r="3" stroke="white" strokeWidth="1.5" fill="none" />
-          <circle cx="20" cy="28" r="3" stroke="white" strokeWidth="1.5" fill="none" />
-        </svg>
-      ),
+      icon: IconIntegrations,
       accent: "#10A37F",
     },
     {
-      name: "Meta & Google Ads",
-      role: "Performance Marketing",
+      name: "Meta & Google Ads", role: "Performance Marketing",
       desc: "AI-enhanced campaign management across Meta and Google — automated bidding, creative testing, audience optimization, and real-time budget allocation.",
-      logo: (
-        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-          <rect width="40" height="40" rx="10" fill="#0081FB" />
-          <path d="M12 20c0-5.5 3-9 6-9s4 3.5 6 9c2 5.5 3 9 6 9s6-3.5 6-9" stroke="white" strokeWidth="1.8" strokeLinecap="round" fill="none" />
-          <path d="M10 20c0 5.5 3 9 6 9s4-3.5 6-9" stroke="white" strokeWidth="1.8" strokeLinecap="round" fill="none" />
-        </svg>
+      icon: (
+        <>
+          <img src="/logo-meta.png" width={38} height={38} style={{ borderRadius: 6 }} alt="Meta" />
+        </>
       ),
       accent: "#0081FB",
     },
     {
-      name: "Workflow Automation",
-      role: "Custom AI Agents",
+      name: "Workflow Automation", role: "Custom AI Agents",
       desc: "Proprietary AI agents that run 24/7 — handling tasks from automated member management and content scheduling to payment processing and alert systems.",
-      logo: (
-        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-          <rect width="40" height="40" rx="10" fill={ACCENT} fillOpacity="0.15" stroke={ACCENT} strokeWidth="1" />
-          <rect x="13" y="12" width="14" height="10" rx="2" stroke={ACCENT} strokeWidth="1.5" fill="none" />
-          <path d="M16 25h8M18 25v3M22 25v3M15 28h10" stroke={ACCENT} strokeWidth="1.5" strokeLinecap="round" />
-          <circle cx="17" cy="17" r="1.5" fill={ACCENT} />
-          <circle cx="23" cy="17" r="1.5" fill={ACCENT} />
-        </svg>
-      ),
+      icon: IconAutomation,
       accent: ACCENT,
     },
     {
-      name: "Predictive Analytics",
-      role: "Data Intelligence",
+      name: "Predictive Analytics", role: "Data Intelligence",
       desc: "Machine learning models that forecast outcomes, detect problems before they impact your business, and recommend actions in real-time.",
-      logo: (
-        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-          <rect width="40" height="40" rx="10" fill="#8B5CF6" fillOpacity="0.15" stroke="#8B5CF6" strokeWidth="1" />
-          <path d="M12 28l5-8 4 4 4-6 5-6" stroke="#8B5CF6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-          <circle cx="30" cy="12" r="2" fill="#8B5CF6" />
-        </svg>
-      ),
+      icon: IconAnalytics,
       accent: "#8B5CF6",
     },
     {
-      name: "Real-Time Dashboards",
-      role: "Full Visibility",
+      name: "Real-Time Dashboards", role: "Full Visibility",
       desc: "Custom-built dashboards with live data, anomaly detection, and automated insight summaries — so you always know exactly what's happening in your business.",
-      logo: (
-        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-          <rect width="40" height="40" rx="10" fill="#F59E0B" fillOpacity="0.15" stroke="#F59E0B" strokeWidth="1" />
-          <rect x="12" y="20" width="4" height="8" rx="1" fill="#F59E0B" />
-          <rect x="18" y="16" width="4" height="12" rx="1" fill="#F59E0B" />
-          <rect x="24" y="12" width="4" height="16" rx="1" fill="#F59E0B" />
-        </svg>
-      ),
+      icon: IconDashboards,
       accent: "#F59E0B",
     },
   ];
 
   return (
     <section id="technology" style={{
-      background: BG_DARK, padding: "120px 32px", position: "relative",
-      overflow: "hidden",
+      background: BG_DARK, padding: "120px 32px", position: "relative", overflow: "hidden",
     }}>
       <div style={{
         position: "absolute", inset: 0, opacity: 0.03, pointerEvents: "none",
@@ -795,10 +694,7 @@ function TechStack() {
             Built with the{" "}
             <span style={{ color: ACCENT }}>best tools</span> available
           </h2>
-          <p style={{
-            fontSize: 16, lineHeight: 1.7, color: TEXT_MUTED,
-            maxWidth: 600, margin: "0 auto",
-          }}>
+          <p style={{ fontSize: 16, lineHeight: 1.7, color: TEXT_MUTED, maxWidth: 600, margin: "0 auto" }}>
             We combine the most advanced AI models, custom integrations, and proven marketing
             platforms to build systems that actually work — and keep working.
           </p>
@@ -818,8 +714,8 @@ function TechStack() {
   );
 }
 
-function TechCard({ name, role, desc, logo, accent }: {
-  name: string; role: string; desc: string; logo: React.ReactNode; accent: string;
+function TechCard({ name, role, desc, icon, accent }: {
+  name: string; role: string; desc: string; icon: React.ReactNode; accent: string;
 }) {
   const [hovered, setHovered] = useState(false);
   return (
@@ -841,22 +737,18 @@ function TechCard({ name, role, desc, logo, accent }: {
         }} />
       )}
       <div style={{ display: "flex", alignItems: "flex-start", gap: 16, marginBottom: 16 }}>
-        <div style={{ flexShrink: 0 }}>{logo}</div>
+        <div style={{ flexShrink: 0, display: "flex", gap: 10, alignItems: "center" }}>
+          {icon}
+        </div>
         <div>
-          <h3 style={{ fontSize: 17, fontWeight: 500, color: TEXT_WHITE, marginBottom: 2 }}>
-            {name}
-          </h3>
+          <h3 style={{ fontSize: 17, fontWeight: 500, color: TEXT_WHITE, marginBottom: 2 }}>{name}</h3>
           <span style={{
             fontSize: 11, fontWeight: 500, letterSpacing: "0.08em",
             textTransform: "uppercase", color: accent,
-          }}>
-            {role}
-          </span>
+          }}>{role}</span>
         </div>
       </div>
-      <p style={{ fontSize: 14, lineHeight: 1.7, color: TEXT_MUTED, margin: 0 }}>
-        {desc}
-      </p>
+      <p style={{ fontSize: 14, lineHeight: 1.7, color: TEXT_MUTED, margin: 0 }}>{desc}</p>
     </div>
   );
 }
@@ -865,46 +757,24 @@ function TechCard({ name, role, desc, logo, accent }: {
 function WhyUs() {
   const [openIdx, setOpenIdx] = useState(0);
   const items = [
-    {
-      icon: "⚡",
-      title: "Days, not months",
-      content: "We deploy working systems in days. Our proven frameworks and reusable components mean you get results fast — not a six-month development timeline.",
-    },
-    {
-      icon: "🤖",
-      title: "AI-native approach",
-      content: "We don't bolt AI on as an afterthought. Every system we build is designed around intelligent automation from the ground up — making them smarter and more efficient than traditional solutions.",
-    },
-    {
-      icon: "🏗️",
-      title: "Custom or pre-built",
-      content: "Need something specific? We build it from scratch. Want to move fast? We have battle-tested frameworks you can plug in and customise. Either way, you get a system that fits your business.",
-    },
-    {
-      icon: "🤝",
-      title: "Full-service partnership",
-      content: "From AI automations to performance marketing to web development — we handle the entire stack. One team, one relationship, complete visibility into everything we build and manage for you.",
-    },
+    { title: "Days, not months", content: "We deploy working systems in days. Our proven frameworks and reusable components mean you get results fast — not a six-month development timeline." },
+    { title: "AI-native approach", content: "We don't bolt AI on as an afterthought. Every system we build is designed around intelligent automation from the ground up — making them smarter and more efficient than traditional solutions." },
+    { title: "Custom or pre-built", content: "Need something specific? We build it from scratch. Want to move fast? We have battle-tested frameworks you can plug in and customise. Either way, you get a system that fits your business." },
+    { title: "Full-service partnership", content: "From AI automations to performance marketing to web development — we handle the entire stack. One team, one relationship, complete visibility into everything we build and manage for you." },
   ];
 
   return (
     <section style={{
-      background: BG_DARK, padding: "120px 32px", position: "relative",
-      overflow: "hidden",
+      background: BG_DARK, padding: "120px 32px", position: "relative", overflow: "hidden",
     }}>
       <div style={{
         position: "absolute", left: "-10%", top: "10%",
-        width: "45%", height: "80%", pointerEvents: "none", opacity: 0.15,
+        width: "45%", height: "80%", pointerEvents: "none", opacity: 0.08,
       }}>
         <svg viewBox="0 0 400 400" fill="none" style={{ width: "100%", height: "100%" }}>
-          {Array.from({ length: 8 }).map((_, i) => (
-            <ellipse key={i} cx="200" cy="200"
-              rx={180} ry={180 * Math.cos((i * Math.PI) / 8)}
-              stroke="#ffffff" strokeWidth="0.5"
-              transform={`rotate(${i * 22.5} 200 200)`}
-              fill="none" />
-          ))}
-          <circle cx="200" cy="200" r="180" stroke="#ffffff" strokeWidth="0.5" fill="none" />
+          <circle cx="200" cy="200" r="180" stroke={ACCENT} strokeWidth="0.5" fill="none" />
+          <circle cx="200" cy="200" r="120" stroke="#ffffff" strokeWidth="0.3" fill="none" />
+          <circle cx="200" cy="200" r="60" stroke={ACCENT} strokeWidth="0.5" fill="none" />
         </svg>
       </div>
 
@@ -931,7 +801,7 @@ function WhyUs() {
                   border: `1px solid ${ACCENT}30`,
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
-                  <span style={{ fontSize: 40 }}>🌵</span>
+                  <img src="/gc-logo.png" alt="GC" style={{ height: 48, width: "auto", opacity: 0.8 }} />
                 </div>
               </div>
               <div style={{
@@ -968,11 +838,18 @@ function WhyUs() {
                       display: "flex", alignItems: "center", gap: 12,
                       fontSize: 17, fontWeight: 400,
                     }}>
-                      <span>{item.icon}</span>
+                      <span style={{
+                        width: 28, height: 28, borderRadius: 6,
+                        background: `${ACCENT}12`, border: `1px solid ${ACCENT}25`,
+                        display: "inline-flex", alignItems: "center", justifyContent: "center",
+                        color: ACCENT, fontSize: 12, fontWeight: 600, flexShrink: 0,
+                      }}>
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
                       {item.title}
                     </span>
                     <svg width={20} height={20} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5"
-                      style={{ transform: openIdx === i ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.3s" }}
+                      style={{ transform: openIdx === i ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.3s", flexShrink: 0 }}
                     >
                       <path d="M5 8l5 5 5-5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
@@ -983,7 +860,7 @@ function WhyUs() {
                   }}>
                     <p style={{
                       fontSize: 14, lineHeight: 1.7, color: TEXT_MUTED,
-                      paddingBottom: 24, paddingLeft: 36,
+                      paddingBottom: 24, paddingLeft: 40,
                     }}>
                       {item.content}
                     </p>
@@ -999,193 +876,195 @@ function WhyUs() {
   );
 }
 
-/* ─── Pricing Section ─── */
-function PricingCard({ icon, name, desc, pricing, includes }: {
-  icon: string; name: string; desc: string;
-  pricing: { label: string; sublabel: string; price: string; suffix?: string }[];
-  includes: string[];
+/* ─── Stacks Section (replaces Pricing) ─── */
+function FlowArrow() {
+  return (
+    <div style={{
+      display: "flex", alignItems: "center", justifyContent: "center",
+      minWidth: 28, flexShrink: 0, color: `${ACCENT}90`,
+    }} className="flow-arrow">
+      <svg width={18} height={18} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M4 10h12M12 6l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </div>
+  );
+}
+
+function StepNode({ num, title, items, logos }: {
+  num: string; title: string; items: string[];
+  logos?: { domain: string; name: string }[];
 }) {
   return (
     <div style={{
-      borderRadius: 20, border: `1px solid #e5e5e5`,
-      overflow: "hidden", background: "#fafafa",
-      display: "flex", flexDirection: "column",
+      flex: "1 1 0", minWidth: 0, padding: "22px 20px",
+      background: "#1e1e1e", borderRadius: 12,
+      border: `1px solid #2a2a2a`,
     }}>
       <div style={{
-        background: BG_DARK, padding: "36px 32px 32px", position: "relative",
+        fontSize: 10, fontWeight: 600, color: ACCENT,
+        letterSpacing: "0.12em", marginBottom: 10, textTransform: "uppercase",
       }}>
-        <div style={{
-          position: "absolute", top: 0, left: 0, right: 0, height: 3,
-          background: `linear-gradient(90deg, ${ACCENT}, ${ACCENT}60, transparent)`,
-        }} />
-        <div style={{
-          fontSize: 12, fontWeight: 500, letterSpacing: "0.12em",
-          textTransform: "uppercase", color: ACCENT, marginBottom: 12,
-          display: "flex", alignItems: "center", gap: 8,
-        }}>
-          <span style={{ fontSize: 16 }}>{icon}</span>
-          {name}
-        </div>
-        <p style={{ fontSize: 14, color: TEXT_MUTED, lineHeight: 1.6, margin: 0 }}>
-          {desc}
-        </p>
+        Step {num}
       </div>
-
-      <div style={{ padding: "28px 32px", display: "flex", flexDirection: "column", gap: 10 }}>
-        {pricing.map((tier, i) => (
-          <div key={i} style={{
-            display: "flex", justifyContent: "space-between", alignItems: "center",
-            padding: "18px 20px", borderRadius: 12,
-            background: "#fff", border: `1px solid #e5e5e5`,
-          }}>
-            <div>
-              <div style={{
-                fontSize: 11, fontWeight: 600, letterSpacing: "0.1em",
-                textTransform: "uppercase", color: "#999", marginBottom: 3,
-              }}>
-                {tier.label}
-              </div>
-              <div style={{ fontSize: 13, color: "#666" }}>{tier.sublabel}</div>
-            </div>
-            <div style={{ textAlign: "right" }}>
-              <div style={{
-                fontSize: 26, fontWeight: 500, color: TEXT_DARK, letterSpacing: "-0.02em",
-              }}>
-                {tier.price}
-              </div>
-              {tier.suffix && <div style={{ fontSize: 12, color: "#999" }}>{tier.suffix}</div>}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div style={{ padding: "0 32px" }}>
-        <div style={{ height: 1, background: "#e5e5e5" }} />
-      </div>
-
-      <div style={{ padding: "28px 32px 36px", flex: 1, display: "flex", flexDirection: "column" }}>
-        <div style={{
-          fontSize: 12, fontWeight: 600, letterSpacing: "0.1em",
-          textTransform: "uppercase", color: "#999", marginBottom: 18,
-        }}>
-          WHAT'S INCLUDED
-        </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 12, flex: 1 }}>
-          {includes.map((item, i) => (
-            <div key={i} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div style={{
-                width: 20, height: 20, borderRadius: 6,
-                background: `${ACCENT}15`, border: `1px solid ${ACCENT}30`,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                flexShrink: 0,
-              }}>
-                <svg width={12} height={12} viewBox="0 0 16 16" fill="none">
-                  <path d="M3 8l3.5 3.5L13 5" stroke={ACCENT} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-              <span style={{ fontSize: 14, color: "#444" }}>{item}</span>
-            </div>
+      <h4 style={{ fontSize: 15, fontWeight: 500, color: TEXT_WHITE, marginBottom: 10, lineHeight: 1.3 }}>
+        {title}
+      </h4>
+      {logos && logos.length > 0 && (
+        <div style={{ display: "flex", gap: 6, marginBottom: 10, flexWrap: "wrap" }}>
+          {logos.map(l => (
+            <img key={l.domain} src={`https://logo.clearbit.com/${l.domain}`}
+              width={22} height={22}
+              style={{ borderRadius: 5, background: "#fff" }}
+              alt={l.name}
+              onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+            />
           ))}
         </div>
-
-        <a href="#contact" style={{
-          display: "flex", alignItems: "center", justifyContent: "center",
-          gap: 8, marginTop: 28, padding: "14px 24px",
-          borderRadius: 12, background: BG_DARK, color: TEXT_WHITE,
-          fontSize: 14, fontWeight: 500, textDecoration: "none",
-          transition: "opacity 0.2s",
-        }}
-          onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
-          onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-        >
-          Get started
-          <ArrowIcon size={14} />
-        </a>
+      )}
+      <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+        {items.map((item, i) => (
+          <div key={i} style={{ fontSize: 13, color: "#aaa", lineHeight: 1.5 }}>
+            {item}
+          </div>
+        ))}
       </div>
     </div>
   );
 }
 
-function Pricing() {
-  const plans = [
+function StackCard({ badge, title, subtitle, steps }: {
+  badge: string; title: string; subtitle: string;
+  steps: { num: string; title: string; items: string[]; logos?: { domain: string; name: string }[] }[];
+}) {
+  return (
+    <div style={{
+      background: "#171717", borderRadius: 20,
+      border: `1px solid #2a2a2a`, padding: "44px 40px",
+      marginBottom: 28, position: "relative", overflow: "hidden",
+    }}>
+      <div style={{
+        position: "absolute", top: 0, left: 0, right: 0, height: 2,
+        background: `linear-gradient(90deg, ${ACCENT}60, transparent)`,
+      }} />
+      <div style={{ textAlign: "center", marginBottom: 36 }}>
+        <div style={{
+          display: "inline-block", padding: "4px 14px",
+          borderRadius: 100, background: `${ACCENT}15`, border: `1px solid ${ACCENT}30`,
+          fontSize: 11, fontWeight: 600, letterSpacing: "0.08em",
+          textTransform: "uppercase", color: ACCENT, marginBottom: 16,
+        }}>
+          {badge}
+        </div>
+        <h3 style={{ fontSize: 26, fontWeight: 500, color: TEXT_WHITE, marginBottom: 8 }}>
+          {title}
+        </h3>
+        <p style={{ fontSize: 15, color: "#999", lineHeight: 1.6, margin: "0 auto", maxWidth: 500 }}>
+          {subtitle}
+        </p>
+      </div>
+
+      <div style={{
+        display: "flex", alignItems: "stretch", gap: 0,
+        width: "100%",
+      }} className="stack-flow">
+        {steps.map((step, i) => (
+          <div key={i} style={{ display: "flex", alignItems: "stretch", flex: "1 1 0", minWidth: 0 }}>
+            {i > 0 && <FlowArrow />}
+            <StepNode {...step} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Stacks() {
+  const stackData = [
     {
-      icon: "🤖",
-      name: "AI AUTOMATION SYSTEM",
-      desc: "Custom-built automation systems tailored to your business — from subscriptions to onboarding to content distribution.",
-      pricing: [
-        { label: "Setup", sublabel: "System design, build & deploy", price: "from £2,500" },
-        { label: "Maintenance", sublabel: "Ongoing support & optimisation", price: "£300", suffix: "/month" },
-      ],
-      includes: [
-        "Custom system architecture",
-        "AI-powered automation & bots",
-        "Payment & access integrations",
-        "Admin dashboard included",
-        "Deployment & testing",
-        "Ongoing maintenance & updates",
+      badge: "Lead Generation",
+      title: "Lead Gen Stack",
+      subtitle: "End-to-end pipeline from cold audience to qualified lead",
+      steps: [
+        { num: "01", title: "Traffic Sources", items: ["Meta Ads", "Google Ads", "LinkedIn Ads"], logos: [{ domain: "meta.com", name: "Meta" }, { domain: "google.com", name: "Google" }, { domain: "linkedin.com", name: "LinkedIn" }] },
+        { num: "02", title: "Landing Page", items: ["High-converting funnel page", "A/B tested copy & creative"], logos: [] },
+        { num: "03", title: "CRM Integration", items: ["Lead capture & tagging", "Pipeline stage management"], logos: [{ domain: "hubspot.com", name: "HubSpot" }] },
+        { num: "04", title: "Follow-Up System", items: ["Automated email sequences", "SMS follow-up", "Lead scoring", "Calendar booking"], logos: [{ domain: "calendly.com", name: "Calendly" }] },
+        { num: "05", title: "Reporting", items: ["Live dashboard", "Cost-per-lead tracking", "Weekly performance reviews"], logos: [] },
       ],
     },
     {
-      icon: "📣",
-      name: "PERFORMANCE MARKETING",
-      desc: "Full-service Meta Ads and Google Ads management to generate leads, drive sales, and scale your customer acquisition.",
-      pricing: [
-        { label: "Month 1", sublabel: "Setup + initial testing", price: "£300" },
-        { label: "Ongoing", sublabel: "Monthly management", price: "£600", suffix: "/month" },
-      ],
-      includes: [
-        "Campaign setup & strategy",
-        "Creative testing (static + video)",
-        "Audience research & targeting",
-        "Weekly optimisation & scaling",
-        "Performance reporting & insights",
-        "Dedicated strategist",
+      badge: "Revenue",
+      title: "Telegram Channel Stack",
+      subtitle: "From audience to recurring revenue",
+      steps: [
+        { num: "01", title: "Audience Acquisition", items: ["Organic content (IG, TikTok, X)", "Paid ads driving to channel"], logos: [] },
+        { num: "02", title: "Telegram Channel", items: ["Premium gated content", "Daily/weekly signals", "Community engagement"], logos: [{ domain: "telegram.org", name: "Telegram" }] },
+        { num: "03", title: "Payment Management", items: ["Automated access control", "Churn management", "Win-back flows"], logos: [{ domain: "stripe.com", name: "Stripe" }] },
+        { num: "04", title: "Content Delivery", items: ["Scheduled posts", "Alerts & notifications", "Exclusive resources"], logos: [] },
       ],
     },
     {
-      icon: "🚀",
-      name: "FULL GROWTH STACK",
-      desc: "Complete digital infrastructure — AI automations, marketing, website, and analytics all working together as one system.",
-      pricing: [
-        { label: "Starting from", sublabel: "Custom scoped per project", price: "£3,500", suffix: "setup" },
-        { label: "Ongoing", sublabel: "Full-service management", price: "from £800", suffix: "/month" },
+      badge: "Content",
+      title: "Social Intelligence Stack",
+      subtitle: "Automated research, planning, and publishing",
+      steps: [
+        { num: "01", title: "Trend Scanning", items: ["Keyword monitoring", "Competitor analysis", "Viral content detection"], logos: [] },
+        { num: "02", title: "AI Content Planning", items: ["Topic clustering", "Calendar generation", "Caption & hook writing"], logos: [] },
+        { num: "03", title: "Creative Production", items: ["Template design", "AI image generation", "Video scripting"], logos: [{ domain: "canva.com", name: "Canva" }] },
+        { num: "04", title: "Scheduling", items: ["Cross-platform posting", "IG, LinkedIn, TikTok, X", "Engagement tracking"], logos: [] },
+        { num: "05", title: "Analytics", items: ["Performance reporting", "Content scoring", "Monthly strategy review"], logos: [] },
       ],
-      includes: [
-        "Everything in both plans",
-        "Website design & development",
-        "CRM & analytics setup",
-        "Multi-channel automation",
-        "Priority support & strategy",
-        "Quarterly business reviews",
+    },
+    {
+      badge: "Financial Services",
+      title: "Trading Intelligence Stack",
+      subtitle: "From market data to automated execution",
+      steps: [
+        { num: "01", title: "Research & Data", items: ["On-chain analytics", "Technical indicators", "Sentiment analysis", "News monitoring"], logos: [] },
+        { num: "02", title: "AI Analysis", items: ["Chart pattern recognition", "Multi-factor scoring", "Risk assessment"], logos: [] },
+        { num: "03", title: "Signal Delivery", items: ["Telegram group alerts", "Entry/exit levels", "Real-time notifications"], logos: [{ domain: "telegram.org", name: "Telegram" }] },
+        { num: "04", title: "Automated Execution", items: ["Bitget API integration", "Position sizing", "Stop-loss management"], logos: [] },
+        { num: "05", title: "Reporting", items: ["P&L tracking", "Win rate analytics", "Portfolio dashboard"], logos: [] },
       ],
     },
   ];
 
   return (
-    <section id="pricing" style={{ background: BG_LIGHT, padding: "120px 32px" }}>
+    <section id="stacks" style={{ background: "#111111", padding: "120px 32px", borderTop: `1px solid #2a2a2a` }}>
       <div style={{ maxWidth: 1320, margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: 60 }}>
-          <SectionLabel>PRICING</SectionLabel>
+          <SectionLabel light>OUR STACKS</SectionLabel>
           <h2 style={{
             fontSize: "clamp(28px, 3.5vw, 48px)",
             fontWeight: 400, lineHeight: 1.2,
-            color: TEXT_DARK, marginBottom: 16,
+            color: TEXT_WHITE, marginBottom: 16,
           }}>
-            Simple, transparent pricing
+            What we build
           </h2>
-          <p style={{ fontSize: 15, lineHeight: 1.7, color: "#666", maxWidth: 520, margin: "0 auto" }}>
-            No hidden fees. No long-term contracts. Pick what you need — or combine everything for a complete growth engine.
+          <p style={{ fontSize: 16, lineHeight: 1.7, color: TEXT_MUTED, maxWidth: 600, margin: "0 auto" }}>
+            End-to-end automation stacks that connect every tool in your workflow into one seamless system.
           </p>
         </div>
 
+        {stackData.map((stack, i) => (
+          <StackCard key={i} {...stack} />
+        ))}
+
+        {/* Custom stacks note */}
         <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-          gap: 24, alignItems: "stretch",
-        }} className="pricing-grid">
-          {plans.map((plan, i) => (
-            <PricingCard key={i} {...plan} />
-          ))}
+          textAlign: "center", marginTop: 48, padding: "36px 24px",
+          borderRadius: 16, border: `1px dashed ${ACCENT}30`,
+          background: `${ACCENT}05`,
+        }}>
+          <p style={{
+            fontSize: 16, color: TEXT_MUTED, margin: 0, lineHeight: 1.7,
+          }}>
+            These are sample stacks.{" "}
+            <span style={{ color: TEXT_WHITE, fontWeight: 500 }}>
+              Every system we build is custom
+            </span>{" "}
+            — tailored to your business, your tools, and your goals.
+          </p>
         </div>
       </div>
     </section>
@@ -1268,9 +1147,18 @@ function ContactForm() {
           padding: "80px 40px", borderRadius: 20,
           border: `1px solid ${BORDER}`, background: BG_CARD,
         }}>
-          <div style={{ fontSize: 48, marginBottom: 20 }}>🌵</div>
+          <div style={{
+            width: 56, height: 56, borderRadius: 12,
+            background: `${ACCENT}15`, border: `1px solid ${ACCENT}30`,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            margin: "0 auto 20px",
+          }}>
+            <svg width={24} height={24} viewBox="0 0 24 24" fill="none" stroke={ACCENT} strokeWidth="2">
+              <path d="M5 12l5 5L20 7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
           <h2 style={{ fontSize: 28, fontWeight: 500, color: TEXT_WHITE, marginBottom: 12 }}>
-            Thanks for reaching out!
+            Thanks for reaching out
           </h2>
           <p style={{ fontSize: 15, color: TEXT_MUTED, lineHeight: 1.7 }}>
             We'll review your details and get back to you within 24 hours with a tailored plan.
@@ -1288,7 +1176,7 @@ function ContactForm() {
     }}>
       <div style={{
         position: "absolute", right: "-5%", top: "5%",
-        width: "35%", height: "90%", pointerEvents: "none", opacity: 0.08,
+        width: "35%", height: "90%", pointerEvents: "none", opacity: 0.06,
       }}>
         <svg viewBox="0 0 400 500" fill="none" style={{ width: "100%", height: "100%" }}>
           <circle cx="200" cy="250" r="180" stroke={ACCENT} strokeWidth="0.5" fill="none" />
@@ -1320,12 +1208,19 @@ function ContactForm() {
 
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
               {[
-                { icon: "⚡", text: "Free consultation — no commitment" },
-                { icon: "🤖", text: "Custom system scoped to your needs" },
-                { icon: "🚀", text: "Working prototype within days" },
+                { num: "01", text: "Free consultation — no commitment" },
+                { num: "02", text: "Custom system scoped to your needs" },
+                { num: "03", text: "Working prototype within days" },
               ].map((item, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <span style={{ fontSize: 18 }}>{item.icon}</span>
+                  <span style={{
+                    width: 28, height: 28, borderRadius: 6,
+                    background: `${ACCENT}12`, border: `1px solid ${ACCENT}25`,
+                    display: "inline-flex", alignItems: "center", justifyContent: "center",
+                    color: ACCENT, fontSize: 11, fontWeight: 600, flexShrink: 0,
+                  }}>
+                    {item.num}
+                  </span>
                   <span style={{ fontSize: 14, color: TEXT_MUTED }}>{item.text}</span>
                 </div>
               ))}
@@ -1470,11 +1365,9 @@ function Footer() {
       }} className="footer-grid">
         <div>
           <div style={{ marginBottom: 20 }}>
-            <GCLogo size={36} />
+            <img src="/gc-logo.png" alt="Golden Cactus Co." style={{ height: 36, width: "auto" }} />
           </div>
-          <p style={{
-            fontSize: 13, lineHeight: 1.7, color: TEXT_MUTED, maxWidth: 280,
-          }}>
+          <p style={{ fontSize: 13, lineHeight: 1.7, color: TEXT_MUTED, maxWidth: 280 }}>
             AI systems and automation agency. We build intelligent systems that automate operations, drive growth, and scale businesses.
           </p>
         </div>
@@ -1510,7 +1403,7 @@ function Footer() {
             { label: "Use Cases", href: "#use-cases" },
             { label: "Process", href: "#process" },
             { label: "Technology", href: "#technology" },
-            { label: "Pricing", href: "#pricing" },
+            { label: "Stacks", href: "#stacks" },
             { label: "Contact", href: "#contact" },
           ].map(l => (
             <a key={l.label} href={l.href} style={{
@@ -1532,14 +1425,14 @@ function Footer() {
           }}>
             Contact
           </h4>
-          <a href="mailto:info@goldencactus.co" style={{
+          <a href="mailto:michael@goldencactus.co" style={{
             display: "block", fontSize: 13, color: "#777",
             textDecoration: "none", marginBottom: 10, transition: "color 0.2s",
           }}
             onMouseEnter={e => (e.currentTarget.style.color = TEXT_WHITE)}
             onMouseLeave={e => (e.currentTarget.style.color = "#777")}
           >
-            info@goldencactus.co
+            michael@goldencactus.co
           </a>
           <p style={{ fontSize: 13, color: "#555", marginTop: 16 }}>
             London, United Kingdom
@@ -1557,7 +1450,7 @@ function Footer() {
           Golden Cactus Co. All rights reserved.
         </p>
         <p style={{ fontSize: 12, color: "#555" }}>
-          © {new Date().getFullYear()}
+          &copy; {new Date().getFullYear()}
         </p>
       </div>
     </footer>
@@ -1586,7 +1479,8 @@ function ResponsiveStyles() {
         .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
         .tech-grid { grid-template-columns: 1fr !important; }
         .use-cases-grid { grid-template-columns: 1fr !important; }
-        .pricing-grid { grid-template-columns: 1fr !important; }
+        .stack-flow { flex-direction: column !important; }
+        .flow-arrow { transform: rotate(90deg); min-height: 28px; min-width: auto !important; }
       }
 
       @media (min-width: 769px) {
@@ -1599,6 +1493,10 @@ function ResponsiveStyles() {
       }
 
       [id] { scroll-margin-top: 80px; }
+
+      .stack-flow::-webkit-scrollbar { height: 4px; }
+      .stack-flow::-webkit-scrollbar-track { background: #1a1a1a; border-radius: 2px; }
+      .stack-flow::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
     `}</style>
   );
 }
@@ -1617,7 +1515,7 @@ export function LandingPage() {
       <Process />
       <TechStack />
       <WhyUs />
-      <Pricing />
+      <Stacks />
       <ContactForm />
       <Footer />
     </div>
