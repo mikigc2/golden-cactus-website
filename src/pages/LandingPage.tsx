@@ -98,7 +98,8 @@ function Nav() {
     { label: "Technology", href: "#technology" },
     { label: "Stacks", href: "#stacks" },
     { label: "Results", href: "#results" },
-    { label: "Blog", href: "#blog" },
+    { label: "Blog", href: "/blog" },
+    { label: "Free Tools", href: "#free-tools" },
     { label: "Contact", href: "#contact" },
   ];
 
@@ -1030,6 +1031,18 @@ function Stacks() {
         { num: "05", title: "Reporting", items: ["P&L tracking", "Win rate analytics", "Portfolio dashboard"], logos: [] },
       ],
     },
+    {
+      badge: "Organic Growth",
+      title: "AI Search & Content Visibility Stack",
+      subtitle: "Get found on Google, ChatGPT, and Perplexity — on autopilot",
+      steps: [
+        { num: "01", title: "Visibility Audit", items: ["GEO/AEO audit", "LLM citation check", "Schema & metadata analysis", "Competitor benchmarking"], logos: [] },
+        { num: "02", title: "AI Content Engine", items: ["30 SEO-optimised articles/mo", "Brand voice matching", "Keyword clustering", "Auto-publishing to CMS"], logos: [{ domain: "wordpress.com", name: "WordPress" }, { domain: "shopify.com", name: "Shopify" }, { domain: "webflow.com", name: "Webflow" }] },
+        { num: "03", title: "Backlink & Authority", items: ["Contextual link building", "Industry-relevant placements", "Domain rating growth"], logos: [] },
+        { num: "04", title: "Reddit & Community", items: ["High-intent thread targeting", "Brand visibility seeding", "Community engagement"], logos: [{ domain: "reddit.com", name: "Reddit" }] },
+        { num: "05", title: "LLM Tracking & Reporting", items: ["ChatGPT mention tracking", "Perplexity citation reports", "Monthly visibility dashboard"], logos: [] },
+      ],
+    },
   ];
 
   return (
@@ -1210,6 +1223,71 @@ function BlogPreview() {
                 </span>
               </div>
             </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Free Tools Section ─── */
+function FreeTools() {
+  const tools = [
+    {
+      title: "AI Readiness Score",
+      description: "Answer 5 questions to find out how ready your business is for AI automation — and where to start.",
+      href: "/tools/ai-readiness",
+      icon: "📊",
+      cta: "Take the quiz",
+    },
+    {
+      title: "Automation ROI Calculator",
+      description: "See how much time and money AI automation could save your business. Adjust the sliders to match your situation.",
+      href: "/tools/roi-calculator",
+      icon: "🧮",
+      cta: "Calculate your ROI",
+    },
+  ];
+
+  return (
+    <section id="free-tools" style={{ background: BG_DARK, padding: "100px 32px", borderTop: `1px solid #1e1e1e` }}>
+      <div style={{ maxWidth: 900, margin: "0 auto" }}>
+        <div style={{ textAlign: "center", marginBottom: 56 }}>
+          <span style={{
+            display: "inline-block", background: "rgba(201,168,76,0.12)", color: ACCENT,
+            fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase",
+            padding: "6px 16px", borderRadius: 100, marginBottom: 20,
+          }}>
+            Free Tools
+          </span>
+          <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 2.6rem)", fontWeight: 700, color: TEXT_WHITE, letterSpacing: "-0.03em", lineHeight: 1.15, marginBottom: 16 }}>
+            See where you stand
+          </h2>
+          <p style={{ color: TEXT_MUTED, fontSize: "1.05rem", maxWidth: 480, margin: "0 auto", lineHeight: 1.6 }}>
+            Free tools to help you understand your automation potential. No email required.
+          </p>
+        </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24 }}>
+          {tools.map(tool => (
+            <a
+              key={tool.title}
+              href={tool.href}
+              style={{
+                textDecoration: "none", background: BG_CARD, border: `1px solid ${BORDER}`,
+                borderRadius: 20, padding: "40px 32px", display: "flex", flexDirection: "column",
+                transition: "border-color 0.3s, transform 0.3s", cursor: "pointer",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.transform = "translateY(-4px)"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = BORDER; e.currentTarget.style.transform = "translateY(0)"; }}
+            >
+              <div style={{ fontSize: "2.5rem", marginBottom: 16 }}>{tool.icon}</div>
+              <h3 style={{ fontSize: "1.3rem", fontWeight: 600, color: TEXT_WHITE, marginBottom: 12 }}>{tool.title}</h3>
+              <p style={{ fontSize: "0.95rem", color: TEXT_MUTED, lineHeight: 1.6, flex: 1 }}>{tool.description}</p>
+              <div style={{ marginTop: 20, display: "inline-flex", alignItems: "center", gap: 8, color: ACCENT, fontSize: "0.9rem", fontWeight: 600 }}>
+                {tool.cta} →
+              </div>
+            </a>
           ))}
         </div>
       </div>
@@ -1550,6 +1628,8 @@ function Footer() {
             { label: "Process", href: "#process" },
             { label: "Technology", href: "#technology" },
             { label: "Stacks", href: "#stacks" },
+            { label: "Blog", href: "/blog" },
+            { label: "Free Tools", href: "#free-tools" },
             { label: "Contact", href: "#contact" },
           ].map(l => (
             <a key={l.label} href={l.href} style={{
@@ -1663,6 +1743,7 @@ export function LandingPage() {
       <WhyUs />
       <Stacks />
       <BlogPreview />
+      <FreeTools />
       <ContactForm />
       <Footer />
     </div>
