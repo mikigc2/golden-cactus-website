@@ -13,7 +13,10 @@ export interface BlogPost {
   content: string; // markdown-ish HTML content
 }
 
+import { newBlogPosts } from "./blogPostsNew";
+
 export const blogPosts: BlogPost[] = [
+  ...newBlogPosts,
   {
     slug: "meta-ads-construction-companies-uk-2026",
     title: "Meta Ads for Construction Companies: What Actually Works in 2026",
