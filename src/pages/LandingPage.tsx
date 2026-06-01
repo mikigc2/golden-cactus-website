@@ -668,37 +668,20 @@ function TechStack() {
 
   return (
     <section id="technology" style={{
-      background: BG_DARK, padding: "120px 32px", position: "relative", overflow: "hidden",
+      background: BG_LIGHT, padding: "120px 32px", position: "relative", overflow: "hidden",
     }}>
-      <div style={{
-        position: "absolute", inset: 0, opacity: 0.03, pointerEvents: "none",
-        backgroundImage: `
-          radial-gradient(circle at 20% 50%, ${ACCENT} 1px, transparent 1px),
-          radial-gradient(circle at 80% 20%, ${ACCENT} 1px, transparent 1px),
-          radial-gradient(circle at 60% 80%, ${ACCENT} 1px, transparent 1px)
-        `,
-        backgroundSize: "100px 100px, 80px 80px, 120px 120px",
-      }} />
-
-      <div style={{
-        position: "absolute", top: "20%", left: "50%", transform: "translateX(-50%)",
-        width: 600, height: 600, borderRadius: "50%",
-        background: `radial-gradient(circle, ${ACCENT}06 0%, transparent 70%)`,
-        pointerEvents: "none",
-      }} />
-
       <div style={{ maxWidth: 1320, margin: "0 auto", position: "relative", zIndex: 1 }}>
         <div style={{ textAlign: "center", marginBottom: 72 }}>
-          <SectionLabel light>OUR TECHNOLOGY</SectionLabel>
+          <SectionLabel>OUR TECHNOLOGY</SectionLabel>
           <h2 style={{
             fontSize: "clamp(28px, 3.5vw, 48px)",
             fontWeight: 400, lineHeight: 1.2,
-            color: TEXT_WHITE, marginBottom: 20,
+            color: TEXT_DARK, marginBottom: 20,
           }}>
             Built with the{" "}
             <span style={{ color: ACCENT }}>best tools</span> available
           </h2>
-          <p style={{ fontSize: 16, lineHeight: 1.7, color: TEXT_MUTED, maxWidth: 600, margin: "0 auto" }}>
+          <p style={{ fontSize: 16, lineHeight: 1.7, color: "#666", maxWidth: 600, margin: "0 auto" }}>
             We combine the most advanced AI models, custom integrations, and proven marketing
             platforms to build systems that actually work — and keep working.
           </p>
@@ -728,8 +711,8 @@ function TechCard({ name, role, desc, icon, accent }: {
       onMouseLeave={() => setHovered(false)}
       style={{
         padding: "32px 28px", borderRadius: 16,
-        border: `1px solid ${hovered ? accent + "40" : BORDER}`,
-        background: hovered ? BG_CARD : "transparent",
+        border: `1px solid ${hovered ? accent + "40" : "#e0ddd8"}`,
+        background: hovered ? "#fff" : "transparent",
         transition: "all 0.3s ease", cursor: "default",
         position: "relative", overflow: "hidden",
       }}
@@ -745,14 +728,14 @@ function TechCard({ name, role, desc, icon, accent }: {
           {icon}
         </div>
         <div>
-          <h3 style={{ fontSize: 17, fontWeight: 500, color: TEXT_WHITE, marginBottom: 2 }}>{name}</h3>
+          <h3 style={{ fontSize: 17, fontWeight: 500, color: TEXT_DARK, marginBottom: 2 }}>{name}</h3>
           <span style={{
             fontSize: 11, fontWeight: 500, letterSpacing: "0.08em",
             textTransform: "uppercase", color: accent,
           }}>{role}</span>
         </div>
       </div>
-      <p style={{ fontSize: 14, lineHeight: 1.7, color: TEXT_MUTED, margin: 0 }}>{desc}</p>
+      <p style={{ fontSize: 14, lineHeight: 1.7, color: "#666", margin: 0 }}>{desc}</p>
     </div>
   );
 }
@@ -901,8 +884,8 @@ function StepNode({ num, title, items, logos }: {
   return (
     <div style={{
       flex: "1 1 0", minWidth: 0, padding: "22px 20px",
-      background: "#1e1e1e", borderRadius: 12,
-      border: `1px solid #2a2a2a`,
+      background: "#f8f6f2", borderRadius: 12,
+      border: `1px solid #e0ddd8`,
     }}>
       <div style={{
         fontSize: 10, fontWeight: 600, color: ACCENT,
@@ -910,7 +893,7 @@ function StepNode({ num, title, items, logos }: {
       }}>
         Step {num}
       </div>
-      <h4 style={{ fontSize: 15, fontWeight: 500, color: TEXT_WHITE, marginBottom: 10, lineHeight: 1.3 }}>
+      <h4 style={{ fontSize: 15, fontWeight: 500, color: TEXT_DARK, marginBottom: 10, lineHeight: 1.3 }}>
         {title}
       </h4>
       {logos && logos.length > 0 && (
@@ -927,7 +910,7 @@ function StepNode({ num, title, items, logos }: {
       )}
       <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
         {items.map((item, i) => (
-          <div key={i} style={{ fontSize: 13, color: "#aaa", lineHeight: 1.5 }}>
+          <div key={i} style={{ fontSize: 13, color: "#777", lineHeight: 1.5 }}>
             {item}
           </div>
         ))}
@@ -942,13 +925,14 @@ function StackCard({ badge, title, subtitle, steps }: {
 }) {
   return (
     <div style={{
-      background: "#171717", borderRadius: 20,
-      border: `1px solid #2a2a2a`, padding: "44px 40px",
+      background: "#fff", borderRadius: 20,
+      border: `1px solid #e0ddd8`, padding: "44px 40px",
       marginBottom: 28, position: "relative", overflow: "hidden",
+      boxShadow: "0 2px 12px rgba(0,0,0,0.04)",
     }}>
       <div style={{
         position: "absolute", top: 0, left: 0, right: 0, height: 2,
-        background: `linear-gradient(90deg, ${ACCENT}60, transparent)`,
+        background: `linear-gradient(90deg, ${ACCENT}80, transparent)`,
       }} />
       <div style={{ textAlign: "center", marginBottom: 36 }}>
         <div style={{
@@ -959,10 +943,10 @@ function StackCard({ badge, title, subtitle, steps }: {
         }}>
           {badge}
         </div>
-        <h3 style={{ fontSize: 26, fontWeight: 500, color: TEXT_WHITE, marginBottom: 8 }}>
+        <h3 style={{ fontSize: 26, fontWeight: 500, color: TEXT_DARK, marginBottom: 8 }}>
           {title}
         </h3>
-        <p style={{ fontSize: 15, color: "#999", lineHeight: 1.6, margin: "0 auto", maxWidth: 500 }}>
+        <p style={{ fontSize: 15, color: "#666", lineHeight: 1.6, margin: "0 auto", maxWidth: 500 }}>
           {subtitle}
         </p>
       </div>
@@ -1046,14 +1030,14 @@ function Stacks() {
   ];
 
   return (
-    <section id="stacks" style={{ background: "#111111", padding: "120px 32px", borderTop: `1px solid #2a2a2a` }}>
+    <section id="stacks" style={{ background: BG_LIGHT, padding: "120px 32px" }}>
       <div style={{ maxWidth: 1320, margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: 60 }}>
-          <SectionLabel light>OUR STACKS</SectionLabel>
+          <SectionLabel>OUR STACKS</SectionLabel>
           <h2 style={{
             fontSize: "clamp(28px, 3.5vw, 48px)",
             fontWeight: 400, lineHeight: 1.2,
-            color: TEXT_WHITE, marginBottom: 16,
+            color: TEXT_DARK, marginBottom: 16,
           }}>
             What we build
           </h2>
@@ -1073,10 +1057,10 @@ function Stacks() {
           background: `${ACCENT}05`,
         }}>
           <p style={{
-            fontSize: 16, color: TEXT_MUTED, margin: 0, lineHeight: 1.7,
+            fontSize: 16, color: "#666", margin: 0, lineHeight: 1.7,
           }}>
             These are sample stacks.{" "}
-            <span style={{ color: TEXT_WHITE, fontWeight: 500 }}>
+            <span style={{ color: TEXT_DARK, fontWeight: 500 }}>
               Every system we build is custom
             </span>{" "}
             — tailored to your business, your tools, and your goals.
@@ -1250,7 +1234,7 @@ function FreeTools() {
   ];
 
   return (
-    <section id="free-tools" style={{ background: BG_DARK, padding: "100px 32px", borderTop: `1px solid #1e1e1e` }}>
+    <section id="free-tools" style={{ background: BG_LIGHT, padding: "100px 32px" }}>
       <div style={{ maxWidth: 900, margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: 56 }}>
           <span style={{
@@ -1260,10 +1244,10 @@ function FreeTools() {
           }}>
             Free Tools
           </span>
-          <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 2.6rem)", fontWeight: 700, color: TEXT_WHITE, letterSpacing: "-0.03em", lineHeight: 1.15, marginBottom: 16 }}>
+          <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 2.6rem)", fontWeight: 700, color: TEXT_DARK, letterSpacing: "-0.03em", lineHeight: 1.15, marginBottom: 16 }}>
             See where you stand
           </h2>
-          <p style={{ color: TEXT_MUTED, fontSize: "1.05rem", maxWidth: 480, margin: "0 auto", lineHeight: 1.6 }}>
+          <p style={{ color: "#666", fontSize: "1.05rem", maxWidth: 480, margin: "0 auto", lineHeight: 1.6 }}>
             Free tools to help you understand your automation potential. No email required.
           </p>
         </div>
@@ -1274,16 +1258,17 @@ function FreeTools() {
               key={tool.title}
               href={tool.href}
               style={{
-                textDecoration: "none", background: BG_CARD, border: `1px solid ${BORDER}`,
+                textDecoration: "none", background: "#fff", border: `1px solid #e0ddd8`,
                 borderRadius: 20, padding: "40px 32px", display: "flex", flexDirection: "column",
-                transition: "border-color 0.3s, transform 0.3s", cursor: "pointer",
+                transition: "border-color 0.3s, transform 0.3s, box-shadow 0.3s", cursor: "pointer",
+                boxShadow: "0 2px 12px rgba(0,0,0,0.04)",
               }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.transform = "translateY(-4px)"; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = BORDER; e.currentTarget.style.transform = "translateY(0)"; }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.08)"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "#e0ddd8"; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 2px 12px rgba(0,0,0,0.04)"; }}
             >
               <div style={{ fontSize: "2.5rem", marginBottom: 16 }}>{tool.icon}</div>
-              <h3 style={{ fontSize: "1.3rem", fontWeight: 600, color: TEXT_WHITE, marginBottom: 12 }}>{tool.title}</h3>
-              <p style={{ fontSize: "0.95rem", color: TEXT_MUTED, lineHeight: 1.6, flex: 1 }}>{tool.description}</p>
+              <h3 style={{ fontSize: "1.3rem", fontWeight: 600, color: TEXT_DARK, marginBottom: 12 }}>{tool.title}</h3>
+              <p style={{ fontSize: "0.95rem", color: "#666", lineHeight: 1.6, flex: 1 }}>{tool.description}</p>
               <div style={{ marginTop: 20, display: "inline-flex", alignItems: "center", gap: 8, color: ACCENT, fontSize: "0.9rem", fontWeight: 600 }}>
                 {tool.cta} →
               </div>

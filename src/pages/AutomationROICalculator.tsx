@@ -71,6 +71,8 @@ function calculate(inputs: Inputs) {
 }
 
 function fmt(n: number): string {
+  if (Math.abs(n) >= 1_000_000) return "£" + (n / 1_000_000).toFixed(1) + "M";
+  if (Math.abs(n) >= 100_000) return "£" + Math.round(n / 1000) + "k";
   return "£" + n.toLocaleString("en-GB");
 }
 
@@ -104,12 +106,15 @@ function ResultCard({ label, value, highlight }: { label: string; value: string;
     <div style={{
       background: highlight ? C.GOLD_DIM : C.BG_CARD,
       border: `1px solid ${highlight ? C.GOLD : C.BORDER}`,
-      borderRadius: 12, padding: "20px 24px", textAlign: "center",
+      borderRadius: 12, padding: "16px 12px", textAlign: "center",
+      width: "100%", height: 88, boxSizing: "border-box" as const,
+      display: "flex", flexDirection: "column" as const, alignItems: "center", justifyContent: "center",
+      overflow: "hidden",
     }}>
-      <div style={{ fontSize: "0.7rem", color: highlight ? C.GOLD : C.TEXT_DIM, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8, fontWeight: 600 }}>
+      <div style={{ fontSize: "0.65rem", color: highlight ? C.GOLD : C.TEXT_DIM, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 6, fontWeight: 600, whiteSpace: "nowrap" as const, overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100%" }}>
         {label}
       </div>
-      <div style={{ fontSize: "1.5rem", fontWeight: 700, color: highlight ? C.GOLD : C.OFF_WHITE }}>
+      <div style={{ fontSize: "clamp(1rem, 2.5vw, 1.4rem)", fontWeight: 700, color: highlight ? C.GOLD : C.OFF_WHITE, whiteSpace: "nowrap" as const, overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100%" }}>
         {value}
       </div>
     </div>
