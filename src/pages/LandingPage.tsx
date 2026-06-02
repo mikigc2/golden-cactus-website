@@ -1218,6 +1218,13 @@ function BlogPreview() {
 function FreeTools() {
   const tools = [
     {
+      title: "AI Automation Audit",
+      description: "10 quick questions about your business. Get a personalised automation score, savings estimate, and specific recommendations.",
+      href: "/tools/automation-audit",
+      icon: "🔍",
+      cta: "Start the audit",
+    },
+    {
       title: "AI Readiness Score",
       description: "Answer 5 questions to find out how ready your business is for AI automation — and where to start.",
       href: "/tools/ai-readiness",

@@ -7,6 +7,7 @@ import { BlogPostPage } from "./pages/BlogPostPage";
 import { BlogListPage } from "./pages/BlogListPage";
 import { AIReadinessQuiz } from "./pages/AIReadinessQuiz";
 import { AutomationROICalculator } from "./pages/AutomationROICalculator";
+import { AutomationAuditQuiz } from "./pages/AutomationAuditQuiz";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/tools/ai-readiness" element={<AIReadinessQuiz />} />
           <Route path="/tools/roi-calculator" element={<AutomationROICalculator />} />
+          <Route path="/tools/automation-audit" element={<AutomationAuditQuiz />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </ThemeProvider>
