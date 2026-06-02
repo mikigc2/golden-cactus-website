@@ -201,12 +201,14 @@ function calculateResults(answers: Record<string, unknown>) {
     const val = answers[q.id];
     if (q.multiSelect && Array.isArray(val)) {
       const selectedLabels = val as string[];
+      const selectedCount = selectedLabels.length;
       totalScore += selectedLabels.reduce((sum, label) => {
         const opt = q.options.find((o) => o.label === label);
         return sum + (opt?.score || 0);
       }, 0);
+      // Use the actual number of selections (not maxSelect) so picking fewer options doesn't dilute the score
       const sorted = [...q.options].sort((a, b) => b.score - a.score);
-      maxPossible += sorted.slice(0, q.maxSelect || 2).reduce((a, b) => a + b.score, 0);
+      maxPossible += sorted.slice(0, Math.max(selectedCount, 1)).reduce((a, b) => a + b.score, 0);
     } else if (typeof val === "number") {
       totalScore += val;
       maxPossible += Math.max(...q.options.map((o) => o.score));
@@ -376,16 +378,26 @@ function calculateResults(answers: Record<string, unknown>) {
     temperature = "warm";
   }
 
-  // Level
+  // Level — automation_level answer overrides when extreme
+  const isFullyManual = typeof automationLevel === "number" && automationLevel === 4; // "We do everything manually"
+  const isWellAutomated = typeof automationLevel === "number" && automationLevel === 1; // "We have systems"
+
   let level: { name: string; colour: string; emoji: string; summary: string };
-  if (automationScore <= 35) {
+  if (isFullyManual || automationScore > 60) {
+    level = {
+      name: "Massive Potential",
+      colour: "#f87171",
+      emoji: "🔴",
+      summary: `Your business has huge automation potential. Your team is spending ~${totalWeeklyHours} hours/week on tasks AI could handle.`,
+    };
+  } else if (isWellAutomated && automationScore <= 35) {
     level = {
       name: "Well Optimised",
       colour: "#4ade80",
       emoji: "🟢",
       summary: "Your business is already fairly automated. Focus on advanced AI — predictive analytics, GEO visibility, and hyper-personalisation.",
     };
-  } else if (automationScore <= 60) {
+  } else if (automationScore <= 35) {
     level = {
       name: "Room to Grow",
       colour: "#facc15",
@@ -394,10 +406,10 @@ function calculateResults(answers: Record<string, unknown>) {
     };
   } else {
     level = {
-      name: "Massive Potential",
-      colour: "#f87171",
-      emoji: "🔴",
-      summary: `Your business has huge automation potential. Your team is spending ~${totalWeeklyHours} hours/week on tasks AI could handle.`,
+      name: "Room to Grow",
+      colour: "#facc15",
+      emoji: "🟡",
+      summary: `You've started automating, but there's significant potential untapped. The right systems could save your team ~${savableHours} hours/week.`,
     };
   }
 
