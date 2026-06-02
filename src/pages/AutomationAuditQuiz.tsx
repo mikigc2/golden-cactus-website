@@ -726,36 +726,25 @@ export function AutomationAuditQuiz() {
               <span style={{
                 display: "inline-block", background: C.GOLD_DIM, color: C.GOLD,
                 fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase",
-                padding: "6px 16px", borderRadius: 100, marginBottom: 24,
+                padding: "6px 16px", borderRadius: 100, marginBottom: 32,
               }}>
                 Your Results
               </span>
 
-              {/* Score circle */}
-              <div style={{ display: "block", marginBottom: 0 }} />
+              {/* Level badge */}
               <div style={{
                 display: "inline-flex", alignItems: "center", justifyContent: "center",
-                width: 180, height: 180, borderRadius: "50%",
-                border: `4px solid ${result.level.colour}`,
+                padding: "16px 36px", borderRadius: 100,
+                border: `2px solid ${result.level.colour}`,
                 background: `${result.level.colour}10`,
                 marginBottom: 28,
               }}>
-                <div>
-                  <div style={{ fontSize: "3rem", fontWeight: 700, color: result.level.colour, lineHeight: 1 }}>
-                    {result.automationScore}
-                  </div>
-                  <div style={{
-                    fontSize: "0.7rem", color: C.TEXT_SECONDARY, textTransform: "uppercase",
-                    letterSpacing: "0.1em", marginTop: 4,
-                  }}>
-                    out of 100
-                  </div>
-                </div>
+                <span style={{ fontSize: "1.4rem", marginRight: 12 }}>{result.level.emoji}</span>
+                <span style={{ fontSize: "1.3rem", fontWeight: 700, color: result.level.colour, letterSpacing: "0.02em" }}>
+                  {result.level.name}
+                </span>
               </div>
 
-              <h2 style={{ fontSize: "1.8rem", fontWeight: 700, marginBottom: 12, color: result.level.colour }}>
-                {result.level.emoji} {result.level.name}
-              </h2>
               <p style={{ color: C.TEXT_SECONDARY, fontSize: "1.05rem", lineHeight: 1.6, maxWidth: 520, margin: "0 auto" }}>
                 {result.level.summary}
               </p>
