@@ -107,14 +107,13 @@ function ResultCard({ label, value, highlight }: { label: string; value: string;
       background: highlight ? C.GOLD_DIM : C.BG_CARD,
       border: `1px solid ${highlight ? C.GOLD : C.BORDER}`,
       borderRadius: 12, padding: "16px 12px", textAlign: "center",
-      width: "100%", height: 88, boxSizing: "border-box" as const,
+      width: "100%", minHeight: 80, boxSizing: "border-box" as const,
       display: "flex", flexDirection: "column" as const, alignItems: "center", justifyContent: "center",
-      overflow: "hidden",
     }}>
-      <div style={{ fontSize: "0.65rem", color: highlight ? C.GOLD : C.TEXT_DIM, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 6, fontWeight: 600, whiteSpace: "nowrap" as const, overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100%" }}>
+      <div style={{ fontSize: "0.65rem", color: highlight ? C.GOLD : C.TEXT_DIM, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6, fontWeight: 600, lineHeight: 1.3, textAlign: "center" }}>
         {label}
       </div>
-      <div style={{ fontSize: "clamp(1rem, 2.5vw, 1.4rem)", fontWeight: 700, color: highlight ? C.GOLD : C.OFF_WHITE, whiteSpace: "nowrap" as const, overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100%" }}>
+      <div style={{ fontSize: "clamp(1.05rem, 3vw, 1.4rem)", fontWeight: 700, color: highlight ? C.GOLD : C.OFF_WHITE }}>
         {value}
       </div>
     </div>
@@ -200,7 +199,7 @@ export function AutomationROICalculator() {
                 </div>
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
+              <div className="roi-bottom-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
                 <ResultCard label="Setup cost" value={fmt(results.setupCost)} />
                 <ResultCard label="Payback period" value={`${results.paybackMonths} month${results.paybackMonths > 1 ? "s" : ""}`} />
                 <ResultCard label="12-month ROI" value={`${results.roi12Month}%`} />
@@ -252,6 +251,10 @@ export function AutomationROICalculator() {
       <style>{`
         @media (max-width: 768px) {
           .roi-grid { grid-template-columns: 1fr !important; }
+          .roi-bottom-grid { grid-template-columns: 1fr 1fr 1fr !important; }
+        }
+        @media (max-width: 400px) {
+          .roi-bottom-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </div>
