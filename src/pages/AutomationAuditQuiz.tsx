@@ -198,7 +198,11 @@ function calculateResults(answers: Record<string, unknown>) {
     if (q.freeText) continue;
     const val = answers[q.id];
     if (q.multiSelect && Array.isArray(val)) {
-      totalScore += (val as number[]).reduce((a, b) => a + b, 0);
+      const selectedLabels = val as string[];
+      totalScore += selectedLabels.reduce((sum, label) => {
+        const opt = q.options.find((o) => o.label === label);
+        return sum + (opt?.score || 0);
+      }, 0);
       const sorted = [...q.options].sort((a, b) => b.score - a.score);
       maxPossible += sorted.slice(0, q.maxSelect || 2).reduce((a, b) => a + b.score, 0);
     } else if (typeof val === "number") {
@@ -228,12 +232,8 @@ function calculateResults(answers: Record<string, unknown>) {
   const drainLabels: string[] = [];
 
   if (Array.isArray(timeDrains)) {
-    const q = questions.find((q) => q.id === "time_drain");
-    if (q) {
-      for (const score of timeDrains as number[]) {
-        const opt = q.options.find((o) => o.score === score);
-        if (opt) drainLabels.push(opt.label.toLowerCase());
-      }
+    for (const label of timeDrains as string[]) {
+      drainLabels.push(label.toLowerCase());
     }
   }
 
@@ -420,15 +420,15 @@ export function AutomationAuditQuiz() {
     }, 300);
   }, [currentStep, totalQuestions]);
 
-  const handleMultiSelect = useCallback((questionId: string, score: number) => {
+  const handleMultiSelect = useCallback((questionId: string, label: string) => {
     setAnswers((prev) => {
-      const current = (prev[questionId] as number[]) || [];
+      const current = (prev[questionId] as string[]) || [];
       const maxSelect = currentQuestion?.maxSelect || 2;
-      if (current.includes(score)) {
-        return { ...prev, [questionId]: current.filter((s) => s !== score) };
+      if (current.includes(label)) {
+        return { ...prev, [questionId]: current.filter((l) => l !== label) };
       }
       if (current.length >= maxSelect) return prev;
-      return { ...prev, [questionId]: [...current, score] };
+      return { ...prev, [questionId]: [...current, label] };
     });
   }, [currentQuestion]);
 
@@ -461,7 +461,7 @@ export function AutomationAuditQuiz() {
     if (!currentQuestion) return false;
     const val = answers[currentQuestion.id];
     if (currentQuestion.freeText) return !!freeTextValue.trim();
-    if (currentQuestion.multiSelect) return Array.isArray(val) && val.length > 0;
+    if (currentQuestion.multiSelect) return Array.isArray(val) && (val as string[]).length > 0;
     return val !== undefined;
   })();
 
@@ -565,8 +565,8 @@ export function AutomationAuditQuiz() {
                       const isMulti = currentQuestion.multiSelect;
                       let selected = false;
                       if (isMulti) {
-                        const arr = (answers[currentQuestion.id] as number[]) || [];
-                        selected = arr.includes(opt.score);
+                        const arr = (answers[currentQuestion.id] as string[]) || [];
+                        selected = arr.includes(opt.label);
                       } else if (currentQuestion.id === "industry") {
                         selected = answers[currentQuestion.id] === opt.label;
                       } else {
@@ -578,7 +578,7 @@ export function AutomationAuditQuiz() {
                           key={opt.label}
                           onClick={() => {
                             if (isMulti) {
-                              handleMultiSelect(currentQuestion.id, opt.score);
+                              handleMultiSelect(currentQuestion.id, opt.label);
                             } else {
                               handleSingleSelect(currentQuestion.id, opt.score, opt.label);
                             }
