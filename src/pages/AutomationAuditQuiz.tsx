@@ -75,9 +75,9 @@ function getQuestions(answers: Record<string, unknown>): Question[] {
     },
     {
       id: "time_drain",
-      text: "What are your biggest time drains? (pick up to 2)",
+      text: "What are your biggest time drains?",
       multiSelect: true,
-      maxSelect: 2,
+      maxSelect: 5,
       options: ecom
         ? [
             { label: "Product listing & descriptions", score: 3, tags: ["content"] },
@@ -103,8 +103,10 @@ function getQuestions(answers: Record<string, unknown>): Question[] {
     {
       id: "current_sales_leads",
       text: ecom
-        ? "How do you currently drive sales?"
-        : "How do you currently get leads?",
+        ? "How do you currently drive sales? (pick all that apply)"
+        : "How do you currently get leads? (pick all that apply)",
+      multiSelect: true,
+      maxSelect: 6,
       options: ecom
         ? [
             { label: "Organic search (SEO)", score: 1 },
@@ -214,16 +216,33 @@ function calculateResults(answers: Record<string, unknown>) {
   // Score out of 100
   const automationScore = Math.max(0, Math.min(100, Math.round((totalScore / maxPossible) * 100)));
 
-  // Estimate savings
+  // Estimate savings — factor in team size + revenue
   const hoursAnswer = answers["repetitive_hours"];
-  let weeklyHours = 10;
-  if (hoursAnswer === 1) weeklyHours = 3;
-  else if (hoursAnswer === 2) weeklyHours = 10;
-  else if (hoursAnswer === 3) weeklyHours = 22;
-  else if (hoursAnswer === 4) weeklyHours = 35;
+  let weeklyHoursPerPerson = 10;
+  if (hoursAnswer === 1) weeklyHoursPerPerson = 3;
+  else if (hoursAnswer === 2) weeklyHoursPerPerson = 10;
+  else if (hoursAnswer === 3) weeklyHoursPerPerson = 22;
+  else if (hoursAnswer === 4) weeklyHoursPerPerson = 35;
 
-  const savableHours = Math.round(weeklyHours * 0.65);
-  const annualSavings = savableHours * 52 * 25; // £25/hr avg
+  // Team multiplier
+  const teamAnswer = answers["team_size"];
+  let teamMultiplier = 1;
+  if (teamAnswer === 4) teamMultiplier = 1; // Just me
+  else if (teamAnswer === 3) teamMultiplier = 3; // 2-5 people
+  else if (teamAnswer === 2) teamMultiplier = 10; // 6-20 people
+  else if (teamAnswer === 1) teamMultiplier = 20; // 20+ people
+
+  // Hourly rate based on revenue (higher revenue = higher value per hour)
+  const revenueAnswer = answers["revenue_range"];
+  let hourlyRate = 30;
+  if (revenueAnswer === 1) hourlyRate = 25; // Under £5k
+  else if (revenueAnswer === 2) hourlyRate = 35; // £5k-20k
+  else if (revenueAnswer === 3) hourlyRate = 50; // £20k-100k
+  else if (revenueAnswer === 4) hourlyRate = 75; // £100k+
+
+  const totalWeeklyHours = weeklyHoursPerPerson * teamMultiplier;
+  const savableHours = Math.round(totalWeeklyHours * 0.6);
+  const annualSavings = savableHours * 52 * hourlyRate;
 
   // Determine recommendations based on answers
   const recommendations: Recommendation[] = [];
@@ -350,7 +369,8 @@ function calculateResults(answers: Record<string, unknown>) {
 
   // Lead temperature
   let temperature: "hot" | "warm" | "exploring" = "exploring";
-  if (typeof salesLeads === "number" && salesLeads >= 3 && typeof automationLevel === "number" && automationLevel >= 3) {
+  const hasNoSystem = Array.isArray(salesLeads) && (salesLeads as string[]).some((l) => l.toLowerCase().includes("don't have"));
+  if (hasNoSystem && typeof automationLevel === "number" && automationLevel >= 3) {
     temperature = "hot";
   } else if (answers["timeline"] === 4 || answers["timeline"] === 3) {
     temperature = "warm";
@@ -370,14 +390,14 @@ function calculateResults(answers: Record<string, unknown>) {
       name: "Room to Grow",
       colour: "#facc15",
       emoji: "🟡",
-      summary: `You've started automating, but there's significant potential untapped. The right systems could save you ~${savableHours} hours/week and £${(annualSavings / 1000).toFixed(0)}k/year.`,
+      summary: `You've started automating, but there's significant potential untapped. The right systems could save your team ~${savableHours} hours/week.`,
     };
   } else {
     level = {
       name: "Massive Potential",
       colour: "#f87171",
       emoji: "🔴",
-      summary: `Your business has huge automation potential. You're spending ~${weeklyHours} hours/week on tasks AI could handle — that's ~£${(annualSavings / 1000).toFixed(0)}k/year in recoverable time.`,
+      summary: `Your business has huge automation potential. Your team is spending ~${totalWeeklyHours} hours/week on tasks AI could handle.`,
     };
   }
 
@@ -551,7 +571,7 @@ export function AutomationAuditQuiz() {
                 </h3>
                 {currentQuestion.multiSelect && (
                   <p style={{ fontSize: "0.85rem", color: C.TEXT_DIM, marginBottom: 20 }}>
-                    Select up to {currentQuestion.maxSelect || 2}
+                    Select all that apply
                   </p>
                 )}
                 {!currentQuestion.multiSelect && !currentQuestion.freeText && (
@@ -712,6 +732,7 @@ export function AutomationAuditQuiz() {
               </span>
 
               {/* Score circle */}
+              <div style={{ display: "block", marginBottom: 0 }} />
               <div style={{
                 display: "inline-flex", alignItems: "center", justifyContent: "center",
                 width: 180, height: 180, borderRadius: "50%",
@@ -760,7 +781,11 @@ export function AutomationAuditQuiz() {
                 padding: "28px 24px", textAlign: "center",
               }}>
                 <div style={{ fontSize: "2rem", fontWeight: 700, color: C.GOLD, lineHeight: 1 }}>
-                  £{result.annualSavings >= 1000 ? `${(result.annualSavings / 1000).toFixed(0)}k` : result.annualSavings}
+                  {result.annualSavings >= 1000000
+                    ? `£${(result.annualSavings / 1000000).toFixed(1)}M`
+                    : result.annualSavings >= 1000
+                    ? `£${(result.annualSavings / 1000).toFixed(0)}k`
+                    : `£${result.annualSavings}`}
                 </div>
                 <div style={{ fontSize: "0.8rem", color: C.TEXT_DIM, marginTop: 8 }}>
                   Estimated annual savings
